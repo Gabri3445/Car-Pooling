@@ -5,6 +5,14 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    webpack: (config, { isServer }) => {
+        config.externals = {
+            "@node-rs/argon2": "@node-rs/argon2",
+            "@node-rs/bcrypt": "@node-rs/bcrypt",
+        };
+        return config;
+      },
+};
 
 export default config;
