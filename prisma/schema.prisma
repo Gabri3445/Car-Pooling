@@ -27,6 +27,7 @@ model User {
   sessions     Session[]
   driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
   driverInfoId String?     @unique
+  ratings      Rating[]
 }
 
 model DriverInfo {
@@ -37,6 +38,7 @@ model DriverInfo {
   licenseNumber       String  @unique
   vehicle             Vehicle @relation(fields: [vehicleLicensePlate], references: [licensePlate])
   vehicleLicensePlate String  @unique
+  trips               Trip[]
 }
 
 model Vehicle {
@@ -50,6 +52,27 @@ model License {
   number     String      @id
   scadenza   DateTime
   DriverInfo DriverInfo?
+}
+
+model Trip {
+  id           String      @id @default(cuid())
+  depCity      String
+  arrCity      String
+  depTime      DateTime
+  estArrTime   DateTime
+  cost         Decimal
+  finished     Boolean
+  note         String      @db.Text
+  DriverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
+  driverInfoId String?
+}
+
+model Rating {
+  id     String  @id
+  star   Int
+  desc   String  @db.Text
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 model Session {
