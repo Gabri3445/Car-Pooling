@@ -10,11 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  DRIVER
+  PASSENGER
+}
+
 model User {
-  id       String    @id
-  password String
-  username String @unique
-  sessions Session[]
+  id           String      @id
+  password     String
+  role         Role
+  name         String
+  surname      String
+  email        String      @unique
+  phoneNumber  String      @unique
+  username     String      @unique
+  sessions     Session[]
+  driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
+  driverInfoId String?     @unique
+}
+
+model DriverInfo {
+  id                  String  @id @default(cuid())
+  profilePic          Bytes
+  User                User?
+  license             License @relation(fields: [licenseNumber], references: [number])
+  licenseNumber       String  @unique
+  vehicle             Vehicle @relation(fields: [vehicleLicensePlate], references: [licensePlate])
+  vehicleLicensePlate String  @unique
+}
+
+model Vehicle {
+  licensePlate String      @id
+  model        String
+  maxPass      Int
+  DriverInfo   DriverInfo?
+}
+
+model License {
+  number     String      @id
+  scadenza   DateTime
+  DriverInfo DriverInfo?
 }
 
 model Session {
