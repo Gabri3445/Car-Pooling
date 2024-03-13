@@ -8,18 +8,16 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
 
     const loginInWithCallback = login.bind(null, searchParams.callback ?? "/")
 	return (
-		<>
-			<h1>Sign in</h1>
-			<form action={loginInWithCallback}>
-				<label htmlFor="username">Username</label>
-				<input className="bg-gray-500" name="username" id="username" />
-				<br />
-				<label htmlFor="password">Password</label>
-				<input className="bg-gray-500" type="password" name="password" id="password" />
-				<br />
+		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
+			<h1 className="text-4xl mb-4">Sign in</h1>
+			<form className="flex flex-col p-6 border-2 rounded-lg" action={loginInWithCallback}>
+				<label className="mb-1" htmlFor="username">Username:</label>
+				<input className="bg-gray-500 mb-10" name="username" id="username" />
+				<label className="mb-1" htmlFor="password mb-2">Password:</label>
+				<input className="bg-gray-500 mb-10" type="password" name="password" id="password" />
 				<button>Continue</button>
 			</form>
-		</>
+		</div>
 	);
 }
 
