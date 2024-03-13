@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { lucia } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
+import Link from "next/link";
 
 export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
@@ -10,13 +11,14 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
 	return (
 		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
 			<h1 className="text-4xl mb-4">Sign in</h1>
-			<form className="flex flex-col p-6 border-2 rounded-lg" action={loginInWithCallback}>
+			<form className="flex flex-col p-6 border-2 rounded-lg mb-4" action={loginInWithCallback}>
 				<label className="mb-1" htmlFor="username">Username:</label>
-				<input className="bg-gray-500 mb-10" name="username" id="username" />
-				<label className="mb-1" htmlFor="password mb-2">Password:</label>
-				<input className="bg-gray-500 mb-10" type="password" name="password" id="password" />
+				<input className="bg-gray-500 mb-2" name="username" id="username" />
+				<label className="mb-1" htmlFor="password">Password:</label>
+				<input className="bg-gray-500 mb-2" type="password" name="password" id="password" />
 				<button>Continue</button>
 			</form>
+			<div><Link className="text-blue-500 bg-white/15 p-3 rounded-md" href="/signup">Go to Sign Up</Link></div>
 		</div>
 	);
 }
@@ -62,16 +64,12 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 		// Since protecting against this is none-trivial,
 		// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
 		// If usernames are public, you may outright tell the user that the username is invalid.
-		return {
-			error: "Incorrect username or password"
-		};
+		return redirect("/error?error=invusername");
 	}
 
 	const validPassword = await new Argon2id().verify(existingUser.password, password);
 	if (!validPassword) {
-		return {
-			error: "Incorrect username or password"
-		};
+		return redirect("/error?error=invpassword");
 	}
 
 	const session = await lucia.createSession(existingUser.id, {});

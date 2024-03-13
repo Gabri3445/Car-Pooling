@@ -15,6 +15,10 @@ export default function ErrorPage() {
         switch (search) {
             case 'unique':
                 return 'One of the fields entered was already in use'
+            case 'invusername':
+                return 'Invalid username'
+            case 'invpassword':
+                return 'Invalid password'
             default:
                 return 'An error occurred'
         }
