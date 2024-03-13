@@ -37,7 +37,7 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 		};
 	}
 	const password = formData.get("password");
-	if (typeof password !== "string" || password.length < 3 || password.length > 255) {
+	if (typeof password !== "string" || password.length < 4 || password.length > 255) {
 		return {
 			error: "Invalid password"
 		};
