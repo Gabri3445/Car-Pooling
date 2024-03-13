@@ -24,6 +24,7 @@ model User {
   email        String      @unique
   phoneNumber  String      @unique
   username     String      @unique
+  idCard       String      @unique
   sessions     Session[]
   driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
   driverInfoId String?     @unique
