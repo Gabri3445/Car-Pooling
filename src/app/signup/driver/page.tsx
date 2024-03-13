@@ -25,8 +25,8 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
 				<input className="bg-gray-500 mb-2" type="email" name="email" id="email" required />
 				<label className="mb-1" htmlFor="tel">Phone number:</label>
 				<input className="bg-gray-500 mb-2" type="tel" name="tel" id="tel" required />
-				<label className="mb-1" htmlFor="id">ID Card:</label>
-				<input className="bg-gray-500 mb-2" name="id" id="id" required />
+                <label className="mb-1" htmlFor="pfp">Profile Image:</label>
+				<input className="bg-gray-500 mb-2" type="file" accept="image/*" name="pfp" id="pfp" required />
 				<label className="mb-1" htmlFor="password">Password:</label>
 				<input className="bg-gray-500 mb-2" type="password" name="password" id="password" required />
 				<button>Continue</button>
@@ -46,7 +46,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		surname: formData.get("surname"),
 		email: formData.get("email"),
 		tel: formData.get("tel"),
-		id: formData.get("id"),
+        pfp: formData.get("pfp") as File,
 		password: formData.get("password")
 	}
 	// username must be between 4 ~ 31 characters, and only consists of letters, 0-9, -, and _
@@ -81,11 +81,6 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			error: "Invalid phone number"
 		};
 	}
-	if (typeof user.id !== "string") {
-		return {
-			error: "Invalid ID"
-		};
-	}
 	//const password = formData.get("password");
 	if (typeof user.password !== "string" || user.password.length < 4 || user.password.length > 255) {
 		return {
@@ -104,13 +99,17 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			data: {
 				id: userId,
 				password: hashedPassword,
-				role:"PASSENGER",
+				role:"DRIVER",
 				name: user.name,
 				surname: user.surname,
 				email: user.email,
 				phoneNumber: user.tel,
 				username: user.username,
-				idCard: user.id
+                driverInfo: {
+                    create: {
+                        profilePic: Buffer.from(await user.pfp.arrayBuffer()) //toString('base64') to read
+                    }
+                }
 			}
 		})
 	} catch (e) {
