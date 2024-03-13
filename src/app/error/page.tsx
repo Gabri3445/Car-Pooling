@@ -19,6 +19,8 @@ export default function ErrorPage() {
                 return 'Invalid username'
             case 'invpassword':
                 return 'Invalid password'
+            case 'invlogout':
+                return 'Cannot logout if not signed in'
             default:
                 return 'An error occurred'
         }
