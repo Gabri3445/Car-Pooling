@@ -7,7 +7,16 @@ import { cache } from "react";
 
 import type { Session, User } from "lucia";
 
-const adapter = new PrismaAdapter(db.session, db.user); // your adapter
+interface DatabaseUserAttributes {
+	role: string
+}
+
+export enum UserRole {
+	DRIVER,
+	PASSENGER
+}
+
+const adapter = new PrismaAdapter(db.session, db.user);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
@@ -15,6 +24,12 @@ export const lucia = new Lucia(adapter, {
 			// set to `true` when using HTTPS
 			secure: process.env.NODE_ENV === "production" ? true : false,
 		}
+	},
+	getUserAttributes: (attributes) => {
+		return {
+			// attributes has the type of DatabaseUserAttributes
+			role: attributes.role
+		};
 	}
 });
 
@@ -22,8 +37,11 @@ export const lucia = new Lucia(adapter, {
 declare module "lucia" {
 	interface Register {
 		Lucia: typeof lucia;
+		DatabaseUserAttributes : DatabaseUserAttributes ;
 	}
 }
+
+
 
 export const validateRequest = cache(
 	async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
