@@ -8,8 +8,8 @@ export default async function SignOutPage({ searchParams }: { searchParams: { [k
 	return (
 		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
 			<h1 className="text-4xl mb-4">Sign Out</h1>
-			<form className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-white/15" action={logoutWithCallback}>
-				<button className="text-blue-500 text-3xl">Continue</button>
+			<form className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-accent" action={logoutWithCallback}>
+				<button className="text-blue-50 text-3xl">Continue</button>
 			</form>
 		</div>
 	);
