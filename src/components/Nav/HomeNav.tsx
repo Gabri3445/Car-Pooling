@@ -6,10 +6,10 @@ import { validateRequest } from "~/server/auth";
 
 const HomeNav = async () => {
 
-    const session = await validateRequest();
+    const session = await validateRequest(); 
 
     return (
-        <div className="flex h-12 items-center justify-between bg-primary relative">
+        <div className="flex h-12 items-center justify-between bg-primary relative font-bold">
             <Link href="/" className="leading-[3rem] ml-7 text-lg">Car Pooling</Link>
             <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
                 <SearchBar></SearchBar>
