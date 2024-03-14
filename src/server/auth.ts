@@ -9,6 +9,7 @@ import type { Session, User } from "lucia";
 
 interface DatabaseUserAttributes {
 	role: string
+	username: string
 }
 
 export enum UserRole {
@@ -28,7 +29,8 @@ export const lucia = new Lucia(adapter, {
 	getUserAttributes: (attributes) => {
 		return {
 			// attributes has the type of DatabaseUserAttributes
-			role: attributes.role
+			role: attributes.role,
+			username: attributes.username
 		};
 	}
 });
