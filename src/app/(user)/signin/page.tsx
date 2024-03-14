@@ -13,9 +13,9 @@ export default async function SignInPage({ searchParams }: { searchParams: { [ke
 			<h1 className="text-4xl mb-4">Sign in</h1>
 			<form className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-primary/50" action={loginInWithCallback}>
 				<label className="mb-1" htmlFor="username">Username:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" name="username" id="username" />
+				<input className="bg-secondary mb-2 rounded-md" name="username" id="username" />
 				<label className="mb-1" htmlFor="password">Password:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" type="password" name="password" id="password" />
+				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" />
 				<button>Continue</button>
 			</form>
 			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signup">Go to Sign Up</Link></div>

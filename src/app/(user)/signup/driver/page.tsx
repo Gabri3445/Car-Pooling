@@ -16,19 +16,19 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 			<h1 className="text-4xl mb-4">Create a Driver account</h1>
 			<form className="flex flex-col p-6 bg-primary/50 border-2 rounded-lg mb-4" action={signUpWithCallback}>
 				<label className="mb-1" htmlFor="username">Username (between 4 and 31 characters):</label>
-				<input className="bg-gray-500 mb-2 rounded-md" name="username" id="username" required />
+				<input className="bg-secondary mb-2 rounded-md" name="username" id="username" required />
 				<label className="mb-1" htmlFor="name">Name:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" name="name" id="name" required />
+				<input className="bg-secondary mb-2 rounded-md" name="name" id="name" required />
 				<label className="mb-1" htmlFor="surname">Surname:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" name="surname" id="surname" required />
+				<input className="bg-secondary mb-2 rounded-md" name="surname" id="surname" required />
 				<label className="mb-1" htmlFor="email">Email:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" type="email" name="email" id="email" required />
+				<input className="bg-secondary mb-2 rounded-md" type="email" name="email" id="email" required />
 				<label className="mb-1" htmlFor="tel">Phone number:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" type="tel" name="tel" id="tel" required />
+				<input className="bg-secondary mb-2 rounded-md" type="tel" name="tel" id="tel" required />
                 <label className="mb-1" htmlFor="pfp">Profile Image:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" type="file" accept="image/*" name="pfp" id="pfp" required />
+				<input className="bg-secondary mb-2 rounded-md" type="file" accept="image/*" name="pfp" id="pfp" required />
 				<label className="mb-1" htmlFor="password">Password:</label>
-				<input className="bg-gray-500 mb-2 rounded-md" type="password" name="password" id="password" required />
+				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" required />
 				<button>Continue</button>
 			</form>
 			<div className="mb-6"><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signup">Go to Passenger Sign Up</Link></div>
