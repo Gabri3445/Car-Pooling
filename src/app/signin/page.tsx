@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import Link from "next/link";
 
-export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function SignInPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
     const loginInWithCallback = login.bind(null, searchParams.callback ?? "/")
 	return (

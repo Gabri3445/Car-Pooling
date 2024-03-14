@@ -7,7 +7,7 @@ import { generateId } from "lucia";
 import Link from "next/link";
 import { Prisma } from "@prisma/client";
 
-export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function DriverSignUpPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
 	const signUpWithCallback = signup.bind(null, searchParams.callback ?? "/")
 

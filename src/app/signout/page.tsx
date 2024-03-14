@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default async function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function SignOutPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const logoutWithCallback = logout.bind(null, searchParams.callback ?? "/")
 	return (
 		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
