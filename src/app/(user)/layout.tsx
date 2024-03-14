@@ -1,8 +1,6 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import HomeNav from "~/components/Nav/HomeNav";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
