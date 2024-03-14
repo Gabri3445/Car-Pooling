@@ -1,21 +1,25 @@
 "use client"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const SignUpMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const router = useRouter();
+    const pathname = usePathname();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleSignUp = async () => {
-        router.push("/signup")
+        router.push(`/signup?callback=${pathname}`)
     };
     const handleLogIn = async () => {
-        router.push("/signin");
+        router.push(`/signin?callback=${pathname}`);
+    }
+    const handleDriverSignUp = async () => {
+        router.push(`/signup/driver?callback=${pathname}`);
     }
     const handleClose = () => {
         setAnchorEl(null);
@@ -33,7 +37,8 @@ const SignUpMenu = () => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleSignUp}>Sign Up</MenuItem>
+                <MenuItem onClick={handleSignUp}>Passenger Sign Up</MenuItem>
+                <MenuItem onClick={handleDriverSignUp} >Driver Sign Up</MenuItem>
                 <MenuItem onClick={handleLogIn}>Log in</MenuItem>
             </Menu>
         </div>
