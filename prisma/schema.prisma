@@ -32,21 +32,21 @@ model User {
 }
 
 model DriverInfo {
-  id                  String   @id @default(cuid())
-  profilePic          Bytes
-  User                User?
-  license             License? @relation(fields: [licenseNumber], references: [number])
-  licenseNumber       String?  @unique
-  vehicle             Vehicle? @relation(fields: [vehicleLicensePlate], references: [licensePlate])
-  vehicleLicensePlate String?  @unique
-  trips               Trip[]
+  id            String    @id @default(cuid())
+  profilePic    Bytes
+  User          User?
+  license       License?  @relation(fields: [licenseNumber], references: [number])
+  licenseNumber String?   @unique
+  vehicle       Vehicle[]
+  trips         Trip[]
 }
 
 model Vehicle {
   licensePlate String      @id
   model        String
   maxPass      Int
-  DriverInfo   DriverInfo?
+  DriverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
+  driverInfoId String?
 }
 
 model License {
