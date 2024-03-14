@@ -24,7 +24,7 @@ model User {
   email        String      @unique
   phoneNumber  String      @unique
   username     String      @unique
-  idCard       String?      @unique
+  idCard       String?     @unique
   sessions     Session[]
   driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
   driverInfoId String?     @unique
@@ -32,7 +32,7 @@ model User {
 }
 
 model DriverInfo {
-  id                  String  @id @default(cuid())
+  id                  String   @id @default(cuid())
   profilePic          Bytes
   User                User?
   license             License? @relation(fields: [licenseNumber], references: [number])
