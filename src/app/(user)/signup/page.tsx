@@ -29,7 +29,7 @@ export default async function PassSignUpPage({ searchParams }: { searchParams: {
 				<input className="mb-2 bg-secondary rounded-md" name="id" id="id" required />
 				<label className="mb-1" htmlFor="password">Password:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" required />
-				<button >Continue</button>
+				<button>Continue</button>
 			</form>
 			<div className="mb-6"><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signup/driver">Go to Driver Sign Up</Link></div>
 			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signin">Go to Sign In</Link></div>
