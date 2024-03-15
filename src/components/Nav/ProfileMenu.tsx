@@ -1,26 +1,28 @@
 "use client"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useRouter } from 'next/navigation';
+import { Role } from '@prisma/client';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 
 
-const ProfileMenu = (props : {username: string}) => {
+const ProfileMenu = (props : {username: string, role: Role}) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const pathname = usePathname();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const router = useRouter()
     const handleProfile = () => {
-        router.push(`/profile/${props.username}`)
+        router.push(`profile/${props.username}`)
     };
     const handleEditProfile = () => {
-        router.push(`/profile`)
+        router.push(`profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
     }
     const handleLogOut = async () => {
-        router.push("/signout")
+        router.push(`signout?callback=${pathname}`)
     }
     const handleClose = () => {
         setAnchorEl(null);
