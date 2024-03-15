@@ -10,7 +10,7 @@ const HomeNav = async () => {
 
     return (
         <div className="flex h-14 items-center justify-between border-b-[1px] relative font-bold">
-            <Link href="/" className="h-full ml-7 text-5xl text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Car Pooling</Link>
+            <Link href="/" className="h-full ml-4 text-5xl text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Car Pooling</Link>
             <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
                 <SearchBar></SearchBar>
             </div>
@@ -20,9 +20,5 @@ const HomeNav = async () => {
         </div>
     )
 }
-
-/*
-<Link href="">{props.username}</Link>
-*/
 
 export default HomeNav;
