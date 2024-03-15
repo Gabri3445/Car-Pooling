@@ -1,7 +1,6 @@
 import { lucia, validateRequest } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import Link from "next/link";
 
 export default async function SignOutPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const logoutWithCallback = logout.bind(null, searchParams.callback ?? "/")
@@ -19,7 +18,7 @@ async function logout(callback: string | string[]) {
 	"use server";
 	const { session } = await validateRequest();
 	if (!session) {
-		return redirect("/error?error=invlogout")
+		return redirect("error?error=invlogout")
 	}
 
 	await lucia.invalidateSession(session.id);
