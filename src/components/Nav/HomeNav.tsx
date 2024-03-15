@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import SignUpMenu from "./SignUpMenu";
 import ProfileMenu from "./ProfileMenu";
 import { validateRequest } from "~/server/auth";
+import { Role } from "@prisma/client";
 
 const HomeNav = async () => {
 
@@ -15,7 +16,7 @@ const HomeNav = async () => {
                 <SearchBar></SearchBar>
             </div>
             <div className="mr-7 flex items-center justify-center">
-                {session.user ? <ProfileMenu username={session.user.username}></ProfileMenu> : <SignUpMenu></SignUpMenu> }
+                {session.user ? <ProfileMenu role={session.user.role as Role} username={session.user.username}></ProfileMenu> : <SignUpMenu></SignUpMenu> }
             </div>
         </div>
     )
