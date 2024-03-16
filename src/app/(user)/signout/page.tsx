@@ -2,6 +2,8 @@ import { lucia, validateRequest } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
+// TODO: replaced by server action in ProfileMenu
+
 export default async function SignOutPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const logoutWithCallback = logout.bind(null, searchParams.callback ?? "/")
 	return (

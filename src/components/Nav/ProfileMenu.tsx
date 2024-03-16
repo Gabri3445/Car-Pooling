@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Role } from '@prisma/client';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { signOut } from '~/api/signout';
 
 
 
@@ -28,6 +29,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
         setAnchorEl(null);
     }
 
+
     return (
         <div>
             <button onClick={handleClick}>{props.username}</button>
@@ -42,7 +44,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
             >
                 <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+                <MenuItem onClick={signOut.bind(null, "." + pathname)}>Log out</MenuItem>
             </Menu>
         </div>
     )
