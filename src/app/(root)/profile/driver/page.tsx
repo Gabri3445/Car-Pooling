@@ -6,10 +6,10 @@ export default async function EditDriverPage() {
     const session = await validateRequest();
 
     if (session.user == null) {
-        redirect("signin");
+        redirect("./signin");
     } 
-    if (session.user.role != "driver") {
-        redirect("/");
+    if (session.user.role != "DRIVER") {
+        redirect("./");
     }
     return (
         <div>
