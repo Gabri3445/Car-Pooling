@@ -1,9 +1,9 @@
+"use server"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validateRequest, lucia } from "~/server/auth";
 
 export async function signOut(callback: String) {
-    "use server";
     const { session } = await validateRequest();
     if (!session) {
         return redirect("error?error=invlogout")
