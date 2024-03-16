@@ -28,5 +28,5 @@ async function logout(callback: string | string[]) {
 	if (typeof callback === "string") {
 		return redirect(callback);
 	}
-	return redirect("/");
+	return redirect("./");
 }
