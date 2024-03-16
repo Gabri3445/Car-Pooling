@@ -61,6 +61,11 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			error: "Invalid username"
 		};
 	}
+	if (user.username.toLowerCase() == "driver" || user.username.toLowerCase() == "passenger") {
+		return {
+			error: "Invalid username"
+		};
+	}
 	if (typeof user.name !== "string") {
 		return {
 			error: "Invalid name"
