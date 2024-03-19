@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 export default async function SignOutPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const logoutWithCallback = logout.bind(null, searchParams.callback ?? "/")
+	
 	return (
 		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
 			<h1 className="text-4xl mb-4">Sign Out</h1>
@@ -30,5 +31,5 @@ async function logout(callback: string | string[]) {
 	if (typeof callback === "string") {
 		return redirect(callback);
 	}
-	return redirect("./");
+	return redirect("/");
 }

@@ -78,7 +78,7 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 	if (typeof callback === "string") {
 		return redirect(callback);
 	}
-	return redirect("./");
+	return redirect("/");
 }
 
 interface ActionResult {

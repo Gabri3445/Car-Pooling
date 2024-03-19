@@ -12,10 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable} bg-background text-text`}>
-        {children}
-      </body>
-    </html>
+    <body className={`font-sans ${inter.variable} bg-background text-text`}>
+      {children}
+    </body>
   );
 }

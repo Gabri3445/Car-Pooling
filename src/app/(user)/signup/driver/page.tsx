@@ -135,7 +135,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	if (typeof callback === "string") {
 		return redirect(callback);
 	}
-	return redirect("./")
+	return redirect("/")
 }
 
 interface ActionResult {

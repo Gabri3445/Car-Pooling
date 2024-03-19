@@ -1,6 +1,6 @@
 "use server"
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { RedirectType, redirect } from "next/navigation";
 import { validateRequest, lucia } from "~/server/auth";
 
 export async function signOut(callback: String) {
@@ -14,7 +14,7 @@ export async function signOut(callback: String) {
     const sessionCookie = lucia.createBlankSessionCookie();
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     if (typeof callback === "string") {
-        return redirect(callback);
+        return redirect(callback, RedirectType.replace);
     }
-    return redirect("./");
+    return redirect("/");
 }
