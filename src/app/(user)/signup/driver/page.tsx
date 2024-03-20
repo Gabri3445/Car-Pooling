@@ -25,7 +25,7 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 				<input className="bg-secondary mb-2 rounded-md" type="email" name="email" id="email" required />
 				<label className="mb-1" htmlFor="tel">Phone number:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="tel" name="tel" id="tel" required />
-                <label className="mb-1" htmlFor="pfp">Profile Image:</label>
+				<label className="mb-1" htmlFor="pfp">Profile Image:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="file" accept="image/*" name="pfp" id="pfp" required />
 				<label className="mb-1" htmlFor="password">Password:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" required />
@@ -46,7 +46,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		surname: formData.get("surname"),
 		email: formData.get("email"),
 		tel: formData.get("tel"),
-        pfp: formData.get("pfp") as File,
+		pfp: formData.get("pfp") as File,
 		password: formData.get("password")
 	}
 	// username must be between 4 ~ 31 characters, and only consists of letters, 0-9, -, and _
@@ -92,7 +92,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			error: "Invalid password"
 		};
 	}
-	
+
 
 	const hashedPassword = await new Argon2id().hash(user.password);
 	const userId = generateId(15);
@@ -104,29 +104,25 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			data: {
 				id: userId,
 				password: hashedPassword,
-				role:"DRIVER",
+				role: "DRIVER",
 				name: user.name,
 				surname: user.surname,
 				email: user.email,
 				phoneNumber: user.tel,
 				username: user.username,
-                driverInfo: {
-                    create: {
-                        profilePic: Buffer.from(await user.pfp.arrayBuffer()) //toString('base64') to read
-                    }
-                }
+				driverInfo: {
+					create: {
+						profilePic: Buffer.from(await user.pfp.arrayBuffer()) //toString('base64') to read
+					}
+				}
 			}
 		})
 	} catch (e) {
-		if (e instanceof Prisma.PrismaClientKnownRequestError) {
-			// The .code property can be accessed in a type-safe manner
-			if (e.code === 'P2002') {
-			  return redirect("/error?error=unique")
-			}
-		  }
+		// The .code property can be accessed in a type-safe manner
+		return redirect("/error?error=unique")
 	}
 
-	
+
 
 	const session = await lucia.createSession(userId, {});
 	const sessionCookie = lucia.createSessionCookie(session.id);

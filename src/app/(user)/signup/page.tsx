@@ -97,7 +97,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			error: "Invalid password"
 		};
 	}
-	
+
 
 	const hashedPassword = await new Argon2id().hash(user.password);
 	const userId = generateId(15);
@@ -109,7 +109,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			data: {
 				id: userId,
 				password: hashedPassword,
-				role:"PASSENGER",
+				role: "PASSENGER",
 				name: user.name,
 				surname: user.surname,
 				email: user.email,
@@ -119,15 +119,11 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			}
 		})
 	} catch (e) {
-		if (e instanceof Prisma.PrismaClientKnownRequestError) {
-			// The .code property can be accessed in a type-safe manner
-			if (e.code === 'P2002') {
-			  return redirect("/error?error=unique")
-			}
-		  }
+		// The .code property can be accessed in a type-safe manner
+		return redirect("/error?error=unique")
 	}
 
-	
+
 
 	const session = await lucia.createSession(userId, {});
 	const sessionCookie = lucia.createSessionCookie(session.id);
