@@ -1,4 +1,5 @@
 import { Divider } from "@mui/material";
+import { captureMessage } from "@sentry/nextjs";
 import { redirect } from "next/navigation"
 import AddVehicle from "~/components/EditProfile/Driver/AddVehicle";
 import { validateRequest } from "~/server/auth"
@@ -9,9 +10,11 @@ export default async function EditDriverPage() {
     const session = await validateRequest();
 
     if (session.user == null) {
+        captureMessage("User was not signed in when accessing driver edit page", "log")
         redirect("/signin?callback=/profile/driver");
     }
     if (session.user.role != "DRIVER") {
+        captureMessage("User was not a driver when accessing driver edit page", "log")
         redirect("/");
     }
     const driverId = await db.user.findUnique({

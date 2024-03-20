@@ -4,6 +4,7 @@ import { lucia } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import Link from "next/link";
+import { captureMessage } from "@sentry/nextjs";
 
 export default async function SignInPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
@@ -64,11 +65,13 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 		// Since protecting against this is none-trivial,
 		// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
 		// If usernames are public, you may outright tell the user that the username is invalid.
+		captureMessage("Invalid username", "log")
 		return redirect("/error?error=invusername");
 	}
 
 	const validPassword = await new Argon2id().verify(existingUser.password, password);
 	if (!validPassword) {
+		captureMessage("Invalid password", "log")
 		return redirect("/error?error=invpassword");
 	}
 

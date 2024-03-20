@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { generateId } from "lucia";
 import Link from "next/link";
 import { Prisma } from "@prisma/client";
+import { captureException, getCurrentScope } from "@sentry/nextjs";
 
 export default async function PassSignUpPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
@@ -119,6 +120,8 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			}
 		})
 	} catch (e) {
+		getCurrentScope().setLevel("warning")
+		captureException(e)
 		// The .code property can be accessed in a type-safe manner
 		return redirect("/error?error=unique")
 	}
