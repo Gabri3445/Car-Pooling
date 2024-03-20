@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { validateRequest, lucia } from "~/server/auth";
 
+/**
+ * @deprecated Use the page instead
+ */
 export async function signOut(callback: String) {
     const { session } = await validateRequest();
     if (!session) {
