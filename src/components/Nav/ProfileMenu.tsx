@@ -17,13 +17,13 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
     };
     const router = useRouter()
     const handleProfile = () => {
-        router.push(`./profile/${props.username}`)
+        router.push(`/profile/${props.username}`)
     };
     const handleEditProfile = () => {
-        router.push(`./profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
+        router.push(`/profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
     }
     const handleLogOut = async () => {
-        router.push(`./signout?callback=${pathname}`)
+        router.push(`/signout?callback=${pathname}`)
     }
     const handleClose = () => {
         setAnchorEl(null);
@@ -44,7 +44,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
             >
                 <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={signOut.bind(null, "." + pathname)}>Log out</MenuItem>
+                <MenuItem onClick={handleLogOut}>Log out</MenuItem>
             </Menu>
         </div>
     )

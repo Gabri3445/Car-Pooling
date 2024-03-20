@@ -13,13 +13,13 @@ const SignUpMenu = () => {
         setAnchorEl(event.currentTarget);
     };
     const handleSignUp = async () => {
-        router.push(`/signup?callback=.${pathname}`)
+        router.push(`/signup?callback=${pathname}`)
     };
     const handleLogIn = async () => {
-        router.push(`/signin?callback=.${pathname}`);
+        router.push(`/signin?callback=${pathname}`);
     }
     const handleDriverSignUp = async () => {
-        router.push(`/signup/driver?callback=.${pathname}`);
+        router.push(`/signup/driver?callback=${pathname}`);
     }
     const handleClose = () => {
         setAnchorEl(null);
