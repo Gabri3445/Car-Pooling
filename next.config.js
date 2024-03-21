@@ -25,7 +25,7 @@ export default withSentryConfig(config, {
   silent: true,
   org: "sentry",
   project: "car-pooling",
-  url: "http://localhost:9000/",
+  url: "http://localhost:9000",
 }, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
