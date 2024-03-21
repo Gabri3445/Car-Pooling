@@ -1,4 +1,3 @@
-import { Divider } from "@mui/material";
 import { captureMessage } from "@sentry/nextjs";
 import { redirect } from "next/navigation"
 import AddVehicle from "~/components/EditProfile/Driver/AddVehicle";
