@@ -8,7 +8,7 @@ export default async function AddVehicle(props: { driverId: string }) {
     */
 
     return (
-        <div className="w-2/3 my-auto">
+        <div id="addvehicle" className="w-2/3 my-auto">
             <h1 className="font-bold text-4xl">Add a Vehicle</h1>
             <form action={addVehicle.bind(null, props.driverId)} className="flex flex-col">
                 <label className="mb-1" htmlFor="licensePlateAdd">License Plate:</label>
