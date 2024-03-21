@@ -29,7 +29,3 @@ export default function Nav(props: NavProps) {
         </nav>
     )
 }
-
-/*<li>
-                        <Link className="text-2xl underline" href={"#addvehicle"}>- Add vehicle</Link>
-                    </li>*/
