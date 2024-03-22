@@ -1,10 +1,12 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
 await import("./src/env.js");
+
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -25,7 +27,7 @@ export default withSentryConfig(config, {
   silent: true,
   org: "sentry",
   project: "car-pooling",
-  url: "http://localhost:9000",
+  url: "http://192.168.1.41:9000",
 }, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
