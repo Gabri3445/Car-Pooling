@@ -30,14 +30,14 @@ async function addVehicle(id: string, formData: FormData) {
     const vehicle = {
         licensePlate: formData.get("licensePlate") as string,
         model: formData.get("model") as string,
-        maxPass: formData.get("maxPass") as unknown as number
+        maxPass: Number(formData.get("maxPass")) as number
     }
     if (typeof vehicle.maxPass !== "number") {
         return {
             error: "maxPass must be a number"
         }
     }
-    const user = await db.user.findUnique({
+    const user = await db.driverInfo.findUnique({
         where: {
             id: id
         }
