@@ -13,7 +13,7 @@ export interface Section {
 
 export default function Nav(props: NavProps) {
     return (
-        <nav className="grow">
+        <nav className="flex-2">
             <Link className="text-4xl underline" href={props.id}>{props.title}</Link>
             <div className="ml-4">
                 <ul className="mt-2">
