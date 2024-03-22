@@ -36,8 +36,8 @@ model DriverInfo {
   id            String    @id @default(cuid())
   profilePic    Bytes
   User          User?
-  license       License?  @relation(fields: [licenseNumber], references: [number], onDelete: Cascade)
-  licenseNumber String?   @unique
+  license       License   @relation(fields: [licenseNumber], references: [number], onDelete: Cascade)
+  licenseNumber String    @unique
   vehicle       Vehicle[]
   trips         Trip[]
 }
@@ -52,7 +52,7 @@ model Vehicle {
 
 model License {
   number     String      @id
-  scadenza   DateTime
+  expiration DateTime
   DriverInfo DriverInfo?
 }
 

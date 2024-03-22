@@ -28,6 +28,10 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 				<input className="bg-secondary mb-2 rounded-md" type="tel" name="tel" id="tel" required />
 				<label className="mb-1" htmlFor="pfp">Profile Image:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="file" accept="image/*" name="pfp" id="pfp" required />
+				<label className="mb-1" htmlFor="license">License number:</label>
+				<input className="bg-secondary mb-2 rounded-md" type="text" name="license" id="license" required />
+				<label className="mb-1" htmlFor="expiration">License expiration:</label>
+				<input className="bg-secondary mb-2 rounded-md" type="date" name="expiration" id="expiration" required />
 				<label className="mb-1" htmlFor="password">Password:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" required />
 				<button>Continue</button>
@@ -48,6 +52,8 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		email: formData.get("email"),
 		tel: formData.get("tel"),
 		pfp: formData.get("pfp") as File,
+		license: formData.get("license"),
+		expiration: formData.get("expiration"),
 		password: formData.get("password")
 	}
 	// username must be between 4 ~ 31 characters, and only consists of letters, 0-9, -, and _
@@ -87,6 +93,16 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 			error: "Invalid phone number"
 		};
 	}
+	if (typeof user.license !== "string") {
+		return {
+			error: "Invalid license"
+		};
+	}
+	if (typeof user.expiration !== "string") {
+		return {
+			error: "Invalid expiration"
+		};
+	}
 	//const password = formData.get("password");
 	if (typeof user.password !== "string" || user.password.length < 4 || user.password.length > 255) {
 		return {
@@ -98,8 +114,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	const hashedPassword = await new Argon2id().hash(user.password);
 	const userId = generateId(15);
 
-	// TODO: check if username is already used
-
+	// TODO: check that the expiration date is still valid
 	try {
 		const result = await db.user.create({
 			data: {
@@ -113,7 +128,13 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 				username: user.username,
 				driverInfo: {
 					create: {
-						profilePic: Buffer.from(await user.pfp.arrayBuffer()) //toString('base64') to read
+						profilePic: Buffer.from(await user.pfp.arrayBuffer()), //toString('base64') to read
+						license: {
+							create: {
+								number: user.license,
+								expiration: user.expiration								
+							}
+						}
 					}
 				}
 			}
