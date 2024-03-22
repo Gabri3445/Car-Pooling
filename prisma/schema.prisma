@@ -29,6 +29,7 @@ model User {
   driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id], onDelete: Cascade)
   driverInfoId String?     @unique
   ratings      Rating[]
+  trips        Trip[]
 }
 
 model DriverInfo {
@@ -64,6 +65,7 @@ model Trip {
   cost         Decimal
   finished     Boolean
   note         String      @db.Text
+  Users        User[]
   DriverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
   driverInfoId String?
 }
