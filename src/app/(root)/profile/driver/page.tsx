@@ -11,7 +11,7 @@ export default async function EditDriverPage() {
 
     if (session.user == null) {
         captureMessage("User was not signed in when accessing driver edit page", "log")
-        redirect("/signin?callback=/profile/driver");
+        redirect(`/signin?callback=${encodeURIComponent("/profile/driver")}`);
     }
     if (session.user.role != "DRIVER") {
         captureMessage("User was not a driver when accessing driver edit page", "log")

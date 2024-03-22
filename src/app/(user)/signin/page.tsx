@@ -79,7 +79,7 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 	const sessionCookie = lucia.createSessionCookie(session.id);
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	if (typeof callback === "string") {
-		return redirect(callback);
+		return redirect(decodeURIComponent(callback));
 	}
 	return redirect("/");
 }

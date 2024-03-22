@@ -29,7 +29,7 @@ async function logout(callback: string | string[]) {
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	if (typeof callback === "string") {
-		return redirect(callback);
+		return redirect(decodeURIComponent(callback));
 	}
 	return redirect("/");
 }

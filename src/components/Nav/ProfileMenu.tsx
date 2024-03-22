@@ -23,7 +23,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
         router.push(`/profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
     }
     const handleLogOut = async () => {
-        router.push(`/signout?callback=${pathname}`)
+        router.push(`/signout?callback=${encodeURIComponent(pathname)}`)
     }
     const handleClose = () => {
         setAnchorEl(null);

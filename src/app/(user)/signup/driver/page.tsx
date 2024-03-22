@@ -132,7 +132,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	console.log(callback)
 	if (typeof callback === "string") {
-		return redirect(callback);
+		return redirect(decodeURIComponent(callback));
 	}
 	return redirect("/")
 }
