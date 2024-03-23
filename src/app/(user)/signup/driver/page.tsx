@@ -132,7 +132,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 						license: {
 							create: {
 								number: user.license,
-								expiration: user.expiration								
+								expiration: new Date(user.expiration)						
 							}
 						}
 					}
