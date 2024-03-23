@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache"
 import { db } from "~/server/db"
 
 export default async function AddVehicle(props: { driverId: string }) {
@@ -69,4 +70,6 @@ async function addVehicle(id: string, formData: FormData) {
             }
         }
     })
+    revalidatePath('/')
+    revalidatePath('/profile/driver')
 }

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { db } from "~/server/db";
 
 interface RemoveVehicleProps {
@@ -81,4 +82,6 @@ const removeVehicle = async (formData: FormData) => {
             }
         }
     })
+    revalidatePath('/')
+    revalidatePath('/profile/driver')
 }
