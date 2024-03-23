@@ -38,16 +38,17 @@ model DriverInfo {
   User          User?
   license       License   @relation(fields: [licenseNumber], references: [number], onDelete: Cascade)
   licenseNumber String    @unique
-  vehicle       Vehicle[]
+  vehicles      Vehicle[]
   trips         Trip[]
 }
 
 model Vehicle {
-  licensePlate String      @id
+  licensePlate String     @id
   model        String
   maxPass      Int
-  DriverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
-  driverInfoId String?
+  DriverInfo   DriverInfo @relation(fields: [driverInfoId], references: [id])
+  driverInfoId String
+  Trip         Trip[]
 }
 
 model License {
@@ -57,17 +58,20 @@ model License {
 }
 
 model Trip {
-  id           String      @id @default(cuid())
-  depCity      String
-  arrCity      String
-  depTime      DateTime
-  estArrTime   DateTime
-  cost         Decimal
-  finished     Boolean
-  note         String      @db.Text
-  Users        User[]
-  DriverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id])
-  driverInfoId String?
+  id                  String     @id @default(cuid())
+  createdAt           DateTime   @default(now())
+  depCity             String
+  arrCity             String
+  depTime             String
+  estArrTime          String
+  cost                Decimal
+  finished            Boolean    @default(false)
+  note                String?    @db.Text
+  Users               User[]
+  vehicle             Vehicle    @relation(fields: [vehicleLicensePlate], references: [licensePlate])
+  DriverInfo          DriverInfo @relation(fields: [driverInfoId], references: [id])
+  driverInfoId        String
+  vehicleLicensePlate String
 }
 
 model Rating {
