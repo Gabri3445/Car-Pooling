@@ -8,11 +8,11 @@ export default async function CreatePage() {
     const session = await validateRequest();
 
     if (session.user == null) {
-        captureMessage("User was not signed in when accessing driver edit page", "log")
+        captureMessage("User was not signed in when accessing trip creation page", "log")
         redirect(`/signin?callback=${encodeURIComponent("/profile/driver")}`);
     }
     if (session.user.role != "DRIVER") {
-        captureMessage("User was not a driver when accessing driver edit page", "log")
+        captureMessage("User was not a driver when accessing trip creation page", "log")
         redirect("/");
     }
     const driver = await db.user.findUnique({
