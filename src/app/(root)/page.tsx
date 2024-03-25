@@ -22,6 +22,9 @@ export default async function HomePage() {
               select: {
                 model: true,
                 licensePlate: true
+              },
+              orderBy: {
+                model: "asc"
               }
             }
           }
@@ -37,7 +40,7 @@ export default async function HomePage() {
       }
     })
     if(user && ratings) {
-      const props: DriverProfileProps = {
+      const profileProps: DriverProfileProps = {
         name: user.name,
         surname: user.surname,
         username: user.username,
@@ -48,7 +51,7 @@ export default async function HomePage() {
       return(
         <main className="flex flex-col items-center mt-5">
           <h1 className="mb-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Driver Profile</h1>
-          <DriverProfile {...props}></DriverProfile>
+          <DriverProfile {...profileProps}></DriverProfile>
           <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Trips</h1>
           <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
         </main>
