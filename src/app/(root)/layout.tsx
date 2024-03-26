@@ -20,7 +20,7 @@ export default function RootLayout({
     <body className={`font-sans ${inter.variable} bg-background text-text`}>
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
-          <nav className="sticky top-0 z-20"><HomeNav></HomeNav></nav>
+          <nav className="sticky top-0 z-20 bg-background"><HomeNav></HomeNav></nav>
           {children}
         </ThemeProvider>
       </AppRouterCacheProvider>
