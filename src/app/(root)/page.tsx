@@ -105,7 +105,7 @@ export default async function HomePage() {
           {tripProps.length != 0 && tripProps.map((item, idx) => {
             if (trips[idx]?.finished == false) {
               return (
-                <Trip {...item}></Trip>
+                <Trip key={trips[idx]?.id} {...item}></Trip>
               )
             }
             return null
