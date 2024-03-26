@@ -58,12 +58,14 @@ export default async function CreatePage() {
                     })}
                 </select>
                 <label className="mb-1" htmlFor="note">Note:</label>
-                <input className="bg-secondary mb-2 rounded-md" name="note" id="note" />
+                <textarea className="bg-secondary mb-2 rounded-md max-h-32 min-h-6" name="note" id="note"></textarea>
                 <button>Continue</button>
             </form>
         </div>
     )
 }
+
+//<input className="bg-secondary mb-2 rounded-md" name="note" id="note" />
 
 const createTrip = async (id: string, formData: FormData) => {
     "use server"
