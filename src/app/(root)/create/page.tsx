@@ -1,4 +1,5 @@
 import { captureMessage } from "@sentry/nextjs";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"
 import { validateRequest } from "~/server/auth"
 import { db } from "~/server/db";
@@ -89,4 +90,5 @@ const createTrip = async (id: string, formData: FormData) => {
             driverInfoId: id
         }
     })
+    revalidatePath("/")
 }
