@@ -16,20 +16,21 @@ enum Role {
 }
 
 model User {
-  id           String      @id
-  password     String
-  role         Role
-  name         String
-  surname      String
-  email        String      @unique
-  phoneNumber  String      @unique
-  username     String      @unique
-  idCard       String?     @unique
-  sessions     Session[]
-  driverInfo   DriverInfo? @relation(fields: [driverInfoId], references: [id], onDelete: Cascade)
-  driverInfoId String?     @unique
-  ratings      Rating[]
-  trips        Trip[]
+  id            String      @id
+  password      String
+  role          Role
+  name          String
+  surname       String
+  email         String      @unique
+  phoneNumber   String      @unique
+  username      String      @unique
+  idCard        String?     @unique
+  sessions      Session[]
+  driverInfo    DriverInfo? @relation(fields: [driverInfoId], references: [id], onDelete: Cascade)
+  driverInfoId  String?     @unique
+  ratings       Rating[]
+  trips         Trip[]      @relation(name: "trips")
+  reservedTrips Trip[]      @relation(name: "usersToAccept")
 }
 
 model DriverInfo {
@@ -67,7 +68,8 @@ model Trip {
   cost                Decimal
   finished            Boolean    @default(false)
   note                String?    @db.Text
-  Users               User[]
+  Users               User[]     @relation(name: "trips")
+  UsersToAccept       User[]     @relation(name: "usersToAccept")
   vehicle             Vehicle    @relation(fields: [vehicleLicensePlate], references: [licensePlate])
   DriverInfo          DriverInfo @relation(fields: [driverInfoId], references: [id])
   driverInfoId        String
