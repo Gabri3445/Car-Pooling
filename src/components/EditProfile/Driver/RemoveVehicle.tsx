@@ -60,8 +60,9 @@ export default function RemoveVehicle(props: RemoveVehicleProps) {
                             })}
                         </tbody>
                     </table>
-                    <div className="w-full flex mt-3 flex-row-reverse">
-                        <input className="bg-accent p-3 w-20 rounded-md cursor-pointer" type="submit" value="Remove" />
+                    <div className="w-full flex mt-3 flex-row-reverse items-center">
+                        <input className="bg-accent p-3 w-20 rounded-md cursor-pointer ml-2" type="submit" value="Remove" />
+                        (This will also remove all associated trips with that vehicle)
                     </div>
                 </div>
             </form>
@@ -78,6 +79,13 @@ const removeVehicle = async (formData: FormData) => {
     await db.vehicle.deleteMany({
         where: {
             licensePlate: {
+                in: licensePlates
+            }
+        }
+    })
+    await db.trip.deleteMany({
+        where: {
+            vehicleLicensePlate :{
                 in: licensePlates
             }
         }
