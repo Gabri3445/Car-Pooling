@@ -93,6 +93,7 @@ export default async function HomePage() {
           depTime: t.depTime,
           estArrTime: t.estArrTime,
           cost: Number(t.cost),
+          note: t.note ?? "",
           users: t._count.Users,
           driver: true
         }
@@ -101,16 +102,25 @@ export default async function HomePage() {
         <main className="flex flex-col items-center mt-5">
           <h1 className="mb-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Driver Profile</h1>
           <DriverProfile {...profileProps}></DriverProfile>
+          <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
           <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Trips</h1>
           {tripProps.length != 0 && tripProps.map((item, idx) => {
-            if (trips[idx]?.finished == false) {
+            if (!trips[idx]?.finished) {
               return (
                 <Trip key={trips[idx]?.id} {...item}></Trip>
               )
             }
             return null
           })}
-          <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
+          <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
+          {tripProps.length != 0 && tripProps.map((item, idx) => {
+            if (trips[idx]?.finished) {
+              return (
+                <Trip key={trips[idx]?.id} {...item}></Trip>
+              )
+            }
+            return null
+          })}
         </main>
       )
     }

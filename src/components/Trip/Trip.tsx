@@ -11,6 +11,7 @@ export interface TripProps {
     estArrTime: string,
     cost: number
     users: number,
+    note: string,
     driver: boolean
 }
 
@@ -46,9 +47,13 @@ export default function Trip(props: TripProps) {
                     <span>Users on this trip: {props.users}/{props.maxPass}</span>
                 </div>
             </div>
-            <div className="flex items-center">
-                <button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button> {/*Hide this if driver profile*/}
+            <div className="flex flex-col mr-5">
+                <div className="flex flex-col">
+                    <span>Note:</span>
+                    {props.note == "" ? "No note" : <div className="h-20 w-72 overflow-auto bg-secondary rounded-md text-justify">{props.note}</div>}
+                </div>
             </div>
+            {props.driver ? null : <div className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button></div>}
         </div>
     )
 }
