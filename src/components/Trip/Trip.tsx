@@ -26,7 +26,7 @@ export interface TripProps {
 
 export default function Trip(props: TripProps) {
     return (
-        <div className="border rounded-lg p-2 flex items-center"> {/*modal?*/}
+        <div className="border rounded-lg p-2 flex items-center w-fit mb-4 last:mb-0"> {/*modal?*/}
             <div className="flex items-center rounded-md border mr-5 p-2">
                 <div className="flex flex-col items-center mr-5">
                     <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
