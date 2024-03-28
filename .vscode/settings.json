@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "signup"
-    ]
+    ],
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }
