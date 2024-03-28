@@ -92,4 +92,5 @@ const removeVehicle = async (formData: FormData) => {
     })
     revalidatePath('/')
     revalidatePath('/profile/driver')
+    revalidatePath('/create')
 }
