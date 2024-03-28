@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
+import Link from "next/link"
 import { db } from "~/server/db"
 
 export interface TripProps {
@@ -35,7 +36,7 @@ export default function Trip(props: TripProps) {
                     <Rating className="mt-2" readOnly={props.isDriver && !props.canReserve} value={props.rating}></Rating>
                 </div>
                 <div className="flex flex-col p-2">
-                    <span>{props.username}</span> {/*make this a link*/}
+                    <Link href={`/user/${props.username}`}>{props.username}</Link>
                     <span>{props.model}</span>
                 </div>
             </div>
