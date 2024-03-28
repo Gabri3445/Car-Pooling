@@ -91,4 +91,5 @@ const createTrip = async (id: string, formData: FormData) => {
         }
     })
     revalidatePath("/")
+    redirect("/")
 }
