@@ -38,7 +38,7 @@ export default async function DriverHomePage() {
     })
     const ratings = await db.rating.aggregate({
       where: {
-        userId: session.user.id
+        ToUserId: session.user.id
       },
       _avg: {
         star: true
