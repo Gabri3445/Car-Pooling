@@ -17,7 +17,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
     };
     const router = useRouter()
     const handleProfile = () => {
-        router.push(`/profile/${props.username}`)
+        router.push(`/user/${props.username}`)
     };
     const handleEditProfile = () => {
         router.push(`/profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
