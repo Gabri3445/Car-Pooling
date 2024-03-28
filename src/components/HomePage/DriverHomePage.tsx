@@ -69,6 +69,11 @@ export default async function DriverHomePage() {
                   maxPass: true,
                   model: true
                 }
+              },
+              Ratings: {
+                select: {
+                    star: true
+                }
               }
             }
           })
@@ -95,7 +100,9 @@ export default async function DriverHomePage() {
                 note: t.note ?? "",
                 users: t._count.Users,
                 canReserve: false,
-                id: t.id
+                isDriver: true,
+                id: t.id,
+                rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
               }
             })
             return(
@@ -114,7 +121,7 @@ export default async function DriverHomePage() {
                 })}
                 <h1 className="mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
                 {tripProps.length != 0 && tripProps.map((item, idx) => {
-                  if (trips[idx]?.finished) {
+                  if (trips[idx]?.finished) { //TODO also render a list of all the users to see their rating and leave a rating on the users
                     return (
                       <Trip key={trips[idx]?.id} {...item} canClose={false}></Trip>
                     )

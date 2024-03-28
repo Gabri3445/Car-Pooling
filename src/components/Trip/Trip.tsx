@@ -1,3 +1,4 @@
+import { Rating } from "@mui/material"
 import { revalidatePath } from "next/cache"
 import Image from "next/image"
 import { db } from "~/server/db"
@@ -15,6 +16,8 @@ export interface TripProps {
     users: number,
     note: string,
     canReserve: boolean,
+    isDriver: boolean,
+    rating: number,
     id: string
     canClose?: boolean
 }
@@ -25,8 +28,11 @@ export default function Trip(props: TripProps) {
     return (
         <div className="border rounded-lg p-2 flex items-center"> {/*modal?*/}
             <div className="flex items-center rounded-md border mr-5 p-2">
-                <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50 mr-5">
-                    <Image width={64} height={64} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
+                <div className="flex flex-col items-center mr-5">
+                    <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
+                        <Image width={64} height={64} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
+                    </div>
+                    <Rating className="mt-2" readOnly={props.isDriver && !props.canReserve} value={props.rating}></Rating>
                 </div>
                 <div className="flex flex-col p-2">
                     <span>{props.username}</span> {/*make this a link*/}
@@ -63,7 +69,8 @@ export default function Trip(props: TripProps) {
     )
 }
 
-async function CloseTrip(id :string) {
+//TODO when making the passenger side: either make this a client component or make the rating it's own component
+async function CloseTrip(id: string) {
     "use server"
     await db.trip.update({
         where: {
