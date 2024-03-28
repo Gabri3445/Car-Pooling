@@ -1,4 +1,6 @@
+import { revalidatePath } from "next/cache"
 import Image from "next/image"
+import { db } from "~/server/db"
 
 export interface TripProps {
     pfp: string
@@ -12,7 +14,9 @@ export interface TripProps {
     cost: number
     users: number,
     note: string,
-    driver: boolean
+    canReserve: boolean,
+    id: string
+    canClose?: boolean
 }
 
 //TODO bunch of stuff
@@ -53,7 +57,21 @@ export default function Trip(props: TripProps) {
                     {props.note == "" ? "No note" : <div className="h-20 w-72 overflow-auto bg-secondary rounded-md text-justify">{props.note}</div>}
                 </div>
             </div>
-            {props.driver ? null : <div className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button></div>}
+            {props.canReserve && <div className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button></div>}
+            {props.canClose && <form action={CloseTrip.bind(null, props.id)} className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Close</button></form>}
         </div>
     )
+}
+
+async function CloseTrip(id :string) {
+    "use server"
+    await db.trip.update({
+        where: {
+            id: id
+        },
+        data: {
+            finished: true
+        }
+    })
+    revalidatePath("/")
 }
