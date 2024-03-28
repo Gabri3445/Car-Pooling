@@ -17,7 +17,7 @@ interface Vehicle {
 
 export default function DriverProfile(props: DriverProfileProps) {
     return (
-        <div className="rounded-md p-4 border flex-col flex items-center text-center">
+        <div className="rounded-md p-4 border flex-col flex items-center text-center w-fit">
             <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
                 <Image width={256} height={256} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
             </div>
