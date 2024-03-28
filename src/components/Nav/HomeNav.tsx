@@ -4,6 +4,7 @@ import SignUpMenu from "./SignUpMenu";
 import ProfileMenu from "./ProfileMenu";
 import { validateRequest } from "~/server/auth";
 import { Role } from "@prisma/client";
+import { CaretDown } from "react-bootstrap-icons";
 
 const HomeNav = async () => {
 
@@ -17,7 +18,7 @@ const HomeNav = async () => {
             </div>
             <div className="mr-7 flex items-center justify-center">
                 {session.user?.role == "DRIVER" ? <Link href="/create" className="pr-5">+ Create a trip</Link> : null}
-                {session.user ? <ProfileMenu role={session.user.role as Role} username={session.user.username}></ProfileMenu> : <SignUpMenu></SignUpMenu>}
+                {session.user ? <ProfileMenu role={session.user.role as Role} username={session.user.username}></ProfileMenu> : <SignUpMenu></SignUpMenu>} <CaretDown></CaretDown>
             </div>
         </div>
     )
