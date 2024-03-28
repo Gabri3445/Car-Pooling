@@ -43,4 +43,3 @@ export default function DriverProfile(props: DriverProfileProps) {
         </div>
     )
 }
-//TODO add all trips that the driver has posted

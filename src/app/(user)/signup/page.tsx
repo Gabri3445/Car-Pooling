@@ -103,8 +103,6 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	const hashedPassword = await new Argon2id().hash(user.password);
 	const userId = generateId(15);
 
-	// TODO: check if username is already used
-
 	try {
 		const result = await db.user.create({
 			data: {

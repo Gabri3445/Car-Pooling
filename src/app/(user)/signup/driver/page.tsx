@@ -114,7 +114,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	const hashedPassword = await new Argon2id().hash(user.password);
 	const userId = generateId(15);
 
-	// TODO: check that the expiration date is still valid
+	// maybe TODO: check that the expiration date is still valid
 	try {
 		const result = await db.user.create({
 			data: {
