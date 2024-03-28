@@ -28,7 +28,7 @@ export default async function EditDriverPage() {
     });
     const vehicles = await db.vehicle.findMany({
         where: {
-            driverInfoId: driverId?.driverInfoId
+            driverInfoId: driverId!.driverInfoId!
         },
         select: {
             licensePlate: true,
