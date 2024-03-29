@@ -33,7 +33,7 @@ export default function Trip(props: TripProps) {
                     <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
                         <Image width={64} height={64} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
                     </div>
-                    <Rating className="mt-2" readOnly={props.isDriver && !props.canReserve} value={props.rating}></Rating>
+                    <Rating className="mt-2" readOnly={props.isDriver || props.canReserve}></Rating>
                 </div>
                 <div className="flex flex-col p-2">
                     <Link href={`/user/${props.username}`}>{props.username}</Link>
