@@ -3,9 +3,14 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { captureMessage } from "@sentry/nextjs";
 
+/**
+ * @deprecated Use the server action
+ */
 export default async function SignOutPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const logoutWithCallback = logout.bind(null, searchParams.callback ?? "/")
 	
+	throw new Error("Deprecated. Use the server action", )
+
 	return (
 		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
 			<h1 className="text-4xl mb-4">Sign Out</h1>

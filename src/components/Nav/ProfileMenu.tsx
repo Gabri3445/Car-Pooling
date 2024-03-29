@@ -22,6 +22,9 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
     const handleEditProfile = () => {
         router.push(`/profile/${props.role === 'DRIVER' ? 'driver' : 'passenger'}`)
     }
+    /**
+     * @deprecated Use the server action
+     */
     const handleLogOut = async () => {
         router.push(`/signout?callback=${encodeURIComponent(pathname)}`)
     }
@@ -44,7 +47,7 @@ const ProfileMenu = (props : {username: string, role: Role}) => {
             >
                 <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+                <MenuItem onClick={async () => await signOut()}>Log out</MenuItem>
             </Menu>
         </div>
     )
