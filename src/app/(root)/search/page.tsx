@@ -87,7 +87,7 @@ export default async function SearchPage({
             {tripProps.length != 0 && tripProps.map((item, idx) => {
                 if (!trips[idx]?.finished) {
                   return (
-                    <Trip key={trips[idx]?.id} {...item}></Trip>
+                    <Trip key={trips[idx]?.id} {...item} userId={session.user!.id}></Trip>
                   )
                 }
                 return null

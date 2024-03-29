@@ -19,7 +19,8 @@ export interface TripProps {
     canReserve: boolean,
     isDriver: boolean,
     rating: number,
-    id: string
+    id: string,
+    userId?: string,
     canClose?: boolean
 }
 
@@ -64,14 +65,14 @@ export default function Trip(props: TripProps) {
                     {props.note == "" ? "No note" : <div className="h-20 w-72 overflow-auto bg-secondary rounded-md text-justify">{props.note}</div>}
                 </div>
             </div>
-            {props.canReserve && <div className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button></div>}
-            {props.canClose && <form action={CloseTrip.bind(null, props.id)} className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Close</button></form>}
+            {props.canReserve && <form action={reserveTrip.bind(null, props.id, props.userId!)} className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Reserve</button></form>}
+            {props.canClose && <form action={closeTrip.bind(null, props.id)} className="flex items-center"><button className="bg-accent p-3 rounded-md cursor-pointer">Close</button></form>}
         </div>
     )
 }
 
 //TODO when making the passenger side: either make this a client component or make the rating it's own client component
-async function CloseTrip(id: string) {
+async function closeTrip(id: string) {
     "use server"
     await db.trip.update({
         where: {
@@ -82,4 +83,22 @@ async function CloseTrip(id: string) {
         }
     })
     revalidatePath("/")
+}
+
+async function reserveTrip(tripId: string, userId: string) {
+    "use server"
+    await db.trip.update({
+        where: {
+            id: tripId
+        },
+        data: {
+            UsersToAccept: {
+                connect: {
+                    id: userId
+                }
+            }
+        }
+    })
+    revalidatePath("/")
+    revalidatePath("/search")
 }
