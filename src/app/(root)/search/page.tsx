@@ -60,7 +60,7 @@ export default async function SearchPage({
           }
         }
       })
-    const tripProps: TripProps[] = trips.map(t => {
+    const tripProps: TripProps[] = await Promise.all(trips.map(async t => {
         return {
           pfp: t.DriverInfo.profilePic.toString('base64'),
           username: t.DriverInfo.User!.username,
@@ -73,12 +73,13 @@ export default async function SearchPage({
           cost: Number(t.cost),
           note: t.note ?? "",
           users: t._count.Users,
-          canReserve: true, // only if the user is a pass and has not reserved the trip
+          canReserve: await canReserve(session.user!.role, session.user!.id, t.id), // only if the user is a pass and has not already reserved the trip or is on the trip
           isDriver: session.user?.role == "DRIVER",
           id: t.id,
-          rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
+          rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0, //average of all ratings, if no ratings return 0
+          canClose: false
         }
-      })
+      }))
     return (
         <main>
             <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">All the trips we found from {from} to {to}</h1>
@@ -86,7 +87,7 @@ export default async function SearchPage({
             {tripProps.length != 0 && tripProps.map((item, idx) => {
                 if (!trips[idx]?.finished) {
                   return (
-                    <Trip key={trips[idx]?.id} {...item} canClose={false}></Trip>
+                    <Trip key={trips[idx]?.id} {...item}></Trip>
                   )
                 }
                 return null
@@ -94,4 +95,38 @@ export default async function SearchPage({
             </div>
         </main>
     )
+}
+
+async function canReserve(role: string, userId: string, tripId: string): Promise<boolean> {
+    if(role == "DRIVER") {
+        return false;
+    }
+    const trip = await db.trip.findUnique({
+        where: {
+            id: tripId
+        },
+        select: {
+            Users: {
+                select: {
+                    id: true
+                }
+            },
+            UsersToAccept: {
+                select: {
+                    id: true
+                }
+            }
+        }
+    })
+    for(const user of trip?.Users ?? []) {
+        if(user.id == userId) {
+            return false;
+        }
+    }
+    for(const user of trip?.UsersToAccept ?? []) {
+        if(user.id == userId) {
+            return false;
+        }
+    }
+    return true
 }
