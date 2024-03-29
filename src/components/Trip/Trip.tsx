@@ -70,7 +70,7 @@ export default function Trip(props: TripProps) {
     )
 }
 
-//TODO when making the passenger side: either make this a client component or make the rating it's own component
+//TODO when making the passenger side: either make this a client component or make the rating it's own client component
 async function CloseTrip(id: string) {
     "use server"
     await db.trip.update({
