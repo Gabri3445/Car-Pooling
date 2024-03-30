@@ -16,7 +16,7 @@ const SearchBar = () => {
     return (
         <>
             <div className="md:w-96 w-40 bg-secondary h-8 rounded-md flex items-stretch">
-                <div className="pl-3 flex items-center">
+                <div className="pl-3 pr-3 flex items-center">
                     {icon}
                 </div>
                 <form className="flex w-full items-center"  onSubmit={(e) => {
