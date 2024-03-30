@@ -38,7 +38,7 @@ export default function Trip(props: TripProps) {
                 </div>
                 <div className="flex flex-col p-2">
                     <Link href={`/user/${props.username}`}>{props.username}</Link>
-                    <span>{props.model}</span>
+                    <span className="font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">{props.model}</span>
                 </div>
             </div>
             <div className="flex flex-col mr-5">
