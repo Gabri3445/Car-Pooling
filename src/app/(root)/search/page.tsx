@@ -85,7 +85,7 @@ export default async function SearchPage({
             <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">All the trips we found from {from} to {to}</h1>
             <div className="flex flex-col items-center">
             {tripProps.length != 0 && tripProps.map((item, idx) => {
-                if (!trips[idx]?.finished) {
+                if (!trips[idx]?.finished && trips[idx]!._count.Users != trips[idx]!.vehicle.maxPass) {
                   return (
                     <Trip key={trips[idx]?.id} {...item} userId={session.user!.id}></Trip>
                   )
