@@ -2,6 +2,7 @@ import { db } from "~/server/db";
 import DriverProfile, { DriverProfileProps } from "../Profile/DriverProfile";
 import Trip, { TripProps } from "../Trip/Trip";
 import { validateRequest } from "~/server/auth";
+import ReservedUser, { ReservedUserProps } from "./Driver/ReservedUser";
 
 
 export default async function DriverHomePage() {
@@ -74,6 +75,12 @@ export default async function DriverHomePage() {
           select: {
             star: true
           }
+        },
+        UsersToAccept: {
+          select: {
+            username: true,
+            id: true
+          }
         }
       }
     })
@@ -105,8 +112,22 @@ export default async function DriverHomePage() {
           rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
         }
       })
+      const reservedUserProps: ReservedUserProps[] = trips.flatMap(t => {
+        return t.UsersToAccept.map(u => ({
+          username: u.username,
+          depCity: t.depCity,
+          arrCity: t.arrCity,
+          depTime: t.depTime,
+          estArrTime: t.estArrTime,
+          users: t._count.Users,
+          maxPass: Number(t.vehicle.maxPass),
+          userId: u.id,
+          driverId: session.user.id,
+          tripId: t.id
+        }))
+      })
       return (
-        <main className="flex items-center m-5 justify-between">
+        <main className="flex m-5 items-start">
           <div className="flex items-center flex-col">
             <h1 className="text-center mb-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Driver Profile</h1>
             <DriverProfile {...profileProps}></DriverProfile>
@@ -114,6 +135,13 @@ export default async function DriverHomePage() {
           </div>
           <div className="grow m-6">
             <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
+            <div className="flex flex-col items-center">
+              {reservedUserProps.length != 0 && reservedUserProps.map((item) => {
+                return (
+                  <ReservedUser {...item}></ReservedUser>
+                )
+              })}
+            </div>
             <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Trips</h1>
             <div className="flex flex-col items-center">
               {tripProps.length != 0 && tripProps.map((item, idx) => {
