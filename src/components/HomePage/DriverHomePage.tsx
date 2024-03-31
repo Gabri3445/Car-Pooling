@@ -158,7 +158,7 @@ export default async function DriverHomePage() {
               {tripProps.length != 0 && tripProps.map((item, idx) => {
                 if (trips[idx]?.finished) {
                   return (
-                    <Trip key={trips[idx]?.id} {...item} canClose={false}></Trip>
+                    <Trip key={trips[idx]?.id} {...item} canClose={false} isClosed={true}></Trip>
                   )
                 }
                 return null
