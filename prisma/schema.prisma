@@ -79,15 +79,15 @@ model Trip {
 }
 
 model Rating {
-  id         String  @id
+  id         String @id
   star       Int
-  desc       String  @db.Text
-  FromUser   User    @relation(fields: [FromUserId], references: [id], name: "from")
+  desc       String @db.Text
+  FromUser   User   @relation(fields: [FromUserId], references: [id], name: "from")
   FromUserId String
-  ToUser     User    @relation(fields: [ToUserId], references: [id], name: "to")
+  ToUser     User   @relation(fields: [ToUserId], references: [id], name: "to")
   ToUserId   String
-  Trip       Trip?   @relation(fields: [tripId], references: [id])
-  tripId     String?
+  Trip       Trip   @relation(fields: [tripId], references: [id])
+  tripId     String
 }
 
 model Session {
