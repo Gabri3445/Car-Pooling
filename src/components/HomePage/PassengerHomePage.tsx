@@ -151,7 +151,7 @@ export default async function PassengerHomePage() {
           cost: Number(t.cost),
           note: t.note ?? "",
           users: t._count.Users,
-          canReserve: true,
+          canReserve: false,
           isDriver: false,
           id: t.id,
           rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
