@@ -37,6 +37,8 @@ export default async function PastUsers(props: PastUsersProps) {
                 return (
                     <User 
                     key={u.id} 
+                    userId={u.id}
+                    tripId={props.tripId}
                     username={u.username} 
                     rating={u.ratingsGiven[0]?.star}
                     ratingDesc={u.ratingsGiven[0]?.desc}
