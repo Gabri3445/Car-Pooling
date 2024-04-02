@@ -11,7 +11,7 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "deploy": "prisma migrate dev --name init && next start",
+    "deploy": "prisma migrate deploy && next start",
     "sentry": "@sentry/wizard@latest -i nextjs"
   },
   "dependencies": {

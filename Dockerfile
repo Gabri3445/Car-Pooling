@@ -18,7 +18,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/src/env.js ./src/env.js
-COPY prisma/schema.prisma ./prisma/schema.prisma
+COPY prisma/ ./prisma/
 ENV NODE_ENV=production
 EXPOSE 3000
+ENV HOSTNAME="0.0.0.0:3000"
 CMD [ "npm","run","deploy" ]
