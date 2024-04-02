@@ -22,7 +22,7 @@ export default async function User(props: UserProps) {
                 <Rating value={props.rating ?? 0} readOnly></Rating>
             </div>
             <div className="mt-2">
-                {props.rating ?? "No rating given yet"}
+                {props.ratingDesc ?? "No rating given yet"}
             </div>
         </div>
     )
