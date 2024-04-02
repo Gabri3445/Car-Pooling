@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { db } from "~/server/db"
 import PastUsers from "./PastUsers"
+import RatingWrapper from "../Rating/RatingWrapper"
+import { validateRequest } from "~/server/auth"
 
 export interface TripProps {
     pfp: string
@@ -24,12 +26,14 @@ export interface TripProps {
     userId?: string,
     canClose?: boolean
     canRate?: boolean
-    isClosed?: boolean
+    isClosed?: boolean,
+    driverId?: string
 }
 
 //TODO bunch of stuff
 
-export default function Trip(props: TripProps) {
+export default async function Trip(props: TripProps) {
+    const { user } = await validateRequest()
     return (
         <div className="border rounded-lg p-2 flex flex-col items-center w-fit mb-4"> {/*modal?*/}
             <div className="flex items-center last:mb-0">
@@ -38,7 +42,7 @@ export default function Trip(props: TripProps) {
                         <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
                             <Image width={64} height={64} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
                         </div>
-                        {props.isDriver ? null : <Rating className="mt-2" readOnly={!props.canRate ?? true}></Rating>}
+                        {props.isDriver ? null : <RatingWrapper readOnly={false} ratingFromId={user!.id} ratingToId={props.driverId!} ratingToTripId={props.id} ratingToUsername={props.username}></RatingWrapper>} {/*<Rating className="mt-2" readOnly={!props.canRate ?? true}></Rating>*/}
                     </div>
                     <div className="flex flex-col p-2">
                         <Link href={`/user/${props.username}`}>{props.username}</Link>

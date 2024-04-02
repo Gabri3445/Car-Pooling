@@ -19,6 +19,7 @@ export default function RatingWrapper(props: RatingWrapperProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [value, setValue] = useState<number | null>(null);
     const ratingModalProps: RatingModalProps = {
         ratingFromId: props.ratingFromId,
         ratingToId: props.ratingToId,
@@ -27,7 +28,10 @@ export default function RatingWrapper(props: RatingWrapperProps) {
     }
     return (
         <>
-            <Rating value={props.value ?? 0} readOnly={props.readOnly ?? true}></Rating>
+            <Rating value={value}
+                onChange={(event, newValue) => {
+                    handleOpen();
+                }}></Rating>
             <Modal open={open} onClose={handleClose}>
                 <RatingModal {...ratingModalProps}></RatingModal>
             </Modal>

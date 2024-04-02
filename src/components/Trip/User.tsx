@@ -16,7 +16,7 @@ export default async function User(props: UserProps) {
         <div className="flex flex-col border rounded-md p-1">
             <div className="flex flex-col">
                 <div className="flex items-center mb-2">
-                    <span className="text-lg ml-1 mr-3">{props.username}</span>
+                    <span className="text-lg ml-1 mr-3">{props.username}</span> {/*TODO make this a link*/}
                     <PastUserRatingWrapper ratingToUsername={props.username} ratingFromId={user!.id} ratingToId={props.userId} ratingToTripId={props.tripId}></PastUserRatingWrapper>
                 </div>
                 <Rating value={props.rating ?? 0} readOnly></Rating>

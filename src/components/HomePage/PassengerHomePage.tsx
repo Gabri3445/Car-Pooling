@@ -66,7 +66,8 @@ export default async function PassengerHomePage() {
             profilePic: true,
             User: {
               select: {
-                username: true
+                username: true,
+                id: true
               }
             }
           }
@@ -192,7 +193,7 @@ export default async function PassengerHomePage() {
             {participatingTripsProps.length != 0 && participatingTripsProps.map((item, idx) => {
                 if (participatingTrips[idx]?.finished) {
                   return (
-                    <Trip key={participatingTripsProps[idx]?.id} {...item} canRate={true} canClose={false}></Trip>
+                    <Trip key={participatingTripsProps[idx]?.id} {...item} driverId={participatingTrips[idx]!.DriverInfo.User!.id} canRate={true} canClose={false}></Trip>
                   )
                 }
                 return null
