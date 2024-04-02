@@ -79,7 +79,7 @@ model Trip {
 }
 
 model Rating {
-  id         String @id
+  id         String @id @default(cuid())
   star       Int
   desc       String @db.Text
   FromUser   User   @relation(fields: [FromUserId], references: [id], name: "from")
