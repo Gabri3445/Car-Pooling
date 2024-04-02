@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { db } from "~/server/db"
 
 export interface ReviewData {
@@ -44,4 +45,5 @@ export async function review(data: ReviewData, formData: FormData) {
             }
         })
     }
+    revalidatePath("/")
 }
