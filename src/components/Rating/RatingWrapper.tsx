@@ -22,7 +22,6 @@ export default function RatingWrapper(props: RatingWrapperProps) {
     const ratingModalProps: RatingModalProps = {
         ratingFromId: props.ratingFromId,
         ratingToId: props.ratingToId,
-        ratingToPfp: props.ratingToPfp,
         ratingToTripId: props.ratingToTripId,
         ratingToUsername: props.ratingToUsername
     }
