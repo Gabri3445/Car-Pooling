@@ -71,7 +71,7 @@ model Trip {
   note                String?    @db.Text
   Users               User[]     @relation(name: "trips")
   UsersToAccept       User[]     @relation(name: "usersToAccept")
-  vehicle             Vehicle    @relation(fields: [vehicleLicensePlate], references: [licensePlate])
+  vehicle             Vehicle    @relation(fields: [vehicleLicensePlate], references: [licensePlate], onDelete: Cascade)
   DriverInfo          DriverInfo @relation(fields: [driverInfoId], references: [id])
   Ratings             Rating[]
   driverInfoId        String
