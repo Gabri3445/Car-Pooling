@@ -13,7 +13,7 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 	const signUpWithCallback = signup.bind(null, searchParams.callback ?? "/")
 
 	return (
-		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
+		<div className="flex w-full items-center justify-center flex-col">
 			<h1 className="text-4xl mb-4">Create a Driver account</h1>
 			<form className="flex flex-col p-6 bg-primary/50 border-2 rounded-lg mb-4" action={signUpWithCallback}>
 				<label className="mb-1" htmlFor="username">Username (between 4 and 31 characters):</label>

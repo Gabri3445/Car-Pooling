@@ -10,7 +10,7 @@ export default async function SignInPage({ searchParams }: { searchParams: { [ke
 
     const loginInWithCallback = login.bind(null, searchParams.callback ?? "/")
 	return (
-		<div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
+		<div className="flex w-full items-center justify-center flex-col">
 			<h1 className="text-4xl mb-4">Sign in</h1>
 			<form className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-primary/50" action={loginInWithCallback}>
 				<label className="mb-1" htmlFor="username">Username:</label>
