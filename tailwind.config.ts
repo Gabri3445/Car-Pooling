@@ -11,12 +11,12 @@ export default {
       
     },
     colors: {
-      'text': '#efd9ff',
-      'background': '#0a0014',
-      'primary': '#c773fd',
-      'secondary': '#ac0291',
-      'accent': '#fc14bb',
-     },
+      'text': '#d5e0fa',
+      'background': '#01040a',
+      'primary': '#7897ed',
+      'secondary': '#2b138d',
+      'accent': '#6b28e3',
+      },
   },
   plugins: [],
 } satisfies Config;

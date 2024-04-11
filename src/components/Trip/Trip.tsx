@@ -35,7 +35,7 @@ export interface TripProps {
 export default async function Trip(props: TripProps) {
     const { user } = await validateRequest()
     return (
-        <div className="border rounded-lg p-2 flex flex-col items-center w-fit mb-4"> {/*modal?*/}
+        <div className="border bg-secondary shadow-sm shadow-text rounded-lg p-2 flex flex-col items-center w-fit mb-4"> {/*modal?*/}
             <div className="flex items-center last:mb-0">
                 <div className="flex items-center rounded-md border mr-5 p-2">
                     <div className="flex flex-col items-center mr-5">
@@ -46,7 +46,7 @@ export default async function Trip(props: TripProps) {
                     </div>
                     <div className="flex flex-col p-2">
                         <Link href={`/user/${props.username}`}>{props.username}</Link>
-                        <span className="font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">{props.model}</span>
+                        <span className="font-bold">{props.model}</span>
                     </div>
                 </div>
                 <div className="flex flex-col mr-5">

@@ -166,39 +166,51 @@ export default async function PassengerHomePage() {
             {/*TODO: add some recent reviews*/}
           </div>
           <div className="grow m-6">
-            <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Trips</h1>
-            <div className="flex flex-col items-center">
-              {participatingTripsProps.length != 0 && participatingTripsProps.map((item, idx) => {
-                if (!participatingTrips[idx]?.finished) {
-                  return (
-                    <Trip key={participatingTripsProps[idx]?.id} {...item} canClose={false}></Trip>
-                  )
-                }
-                return null
-              })}
-            </div>
-            <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Trips that the driver needs to accept</h1>
-            <div className="flex flex-col items-center">
-              {reservedTripsProps.length != 0 && reservedTripsProps.map((item, idx) => {
-                if (!reservedTrips[idx]?.finished) {
-                  return (
-                    <Trip key={reservedTripsProps[idx]?.id} {...item} canClose={false}></Trip>
-                  )
-                }
-                return null
-              })}
-            </div>
-            <h1 className="mb-5 mt-5 text-center text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
-            <div className="flex flex-col items-center">
-            {participatingTripsProps.length != 0 && participatingTripsProps.map((item, idx) => {
-                if (participatingTrips[idx]?.finished) {
-                  return (
-                    <Trip key={participatingTripsProps[idx]?.id} {...item} driverId={participatingTrips[idx]!.DriverInfo.User!.id} canRate={true} canClose={false}></Trip>
-                  )
-                }
-                return null
-              })}
-            </div>
+            {participatingTripsProps.length == 0 ? null :
+              <>
+                <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Trips</h1>
+                <div className="flex flex-col items-center">
+                  {participatingTripsProps.length != 0 && participatingTripsProps.map((item, idx) => {
+                    if (!participatingTrips[idx]?.finished) {
+                      return (
+                        <Trip key={participatingTripsProps[idx]?.id} {...item} canClose={false}></Trip>
+                      )
+                    }
+                    return null
+                  })}
+                </div>
+              </>
+            }
+            {reservedTripsProps.length == 0 ? null :
+              <>
+                <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Trips that the driver needs to accept</h1>
+                <div className="flex flex-col items-center">
+                  {reservedTripsProps.length != 0 && reservedTripsProps.map((item, idx) => {
+                    if (!reservedTrips[idx]?.finished) {
+                      return (
+                        <Trip key={reservedTripsProps[idx]?.id} {...item} canClose={false}></Trip>
+                      )
+                    }
+                    return null
+                  })}
+                </div>
+              </>
+            }
+            {participatingTripsProps.length == 0 ? null :
+              <>
+                <h1 className="mb-5 mt-5 text-center text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
+                <div className="flex flex-col items-center">
+                  {participatingTripsProps.length != 0 && participatingTripsProps.map((item, idx) => {
+                    if (participatingTrips[idx]?.finished) {
+                      return (
+                        <Trip key={participatingTripsProps[idx]?.id} {...item} driverId={participatingTrips[idx]!.DriverInfo.User!.id} canRate={true} canClose={false}></Trip>
+                      )
+                    }
+                    return null
+                  })}
+                </div>
+              </>
+            }
           </div>
         </main>
       )

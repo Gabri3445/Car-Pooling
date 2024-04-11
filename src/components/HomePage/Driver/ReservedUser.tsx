@@ -52,7 +52,7 @@ export default async function ReservedUser(props: ReservedUserProps) {
 
 async function acceptUser(userId: string, driverId: string, tripId: string) {
     "use server"
-    await db.trip.update({
+    const result = await db.trip.update({
         where: {
             id: tripId
         },
@@ -62,13 +62,50 @@ async function acceptUser(userId: string, driverId: string, tripId: string) {
                     id: userId
                 }
             },
-            Users: {
-                connect: {
-                    id: userId
+        },
+        select: {
+            _count: {
+                select: {
+                    Users: true
+                }
+            },
+            vehicle: {
+                select: {
+                    maxPass: true
                 }
             }
         }
     })
+    if(result && result._count.Users == result.vehicle.maxPass + 1) {
+        await db.trip.update({
+            where: {
+                id: tripId
+            },
+            data: {
+                Users: {
+                    connect: {
+                        id: userId
+                    }
+                },
+                UsersToAccept: {
+                    set: []
+                }
+            }
+        })
+    } else {
+        await db.trip.update({
+            where: {
+                id: tripId
+            },
+            data: {
+                Users: {
+                    connect: {
+                        id: userId
+                    }
+                }
+            }
+        })
+    }  
     revalidatePath("/")
     revalidatePath("/search")
 }

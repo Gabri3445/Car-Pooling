@@ -134,36 +134,47 @@ export default async function DriverHomePage() {
             {/*TODO: add some recent reviews*/}
           </div>
           <div className="grow m-6">
-            <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
-            <div className="flex flex-col items-center">
-              {reservedUserProps.length != 0 && reservedUserProps.map((item) => {
-                return (
-                  <ReservedUser {...item}></ReservedUser>
-                )
-              })}
-            </div>
-            <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Trips</h1>
-            <div className="flex flex-col items-center">
-              {tripProps.length != 0 && tripProps.map((item, idx) => {
-                if (!trips[idx]?.finished) {
-                  return (
-                    <Trip key={trips[idx]?.id} {...item} canClose={true}></Trip>
-                  )
-                }
-                return null
-              })}
-            </div>
-            <h1 className="mb-5 mt-5 text-center text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
-            <div className="flex flex-col items-center">
-              {tripProps.length != 0 && tripProps.map((item, idx) => {
-                if (trips[idx]?.finished) {
-                  return (
-                    <Trip key={trips[idx]?.id} {...item} canClose={false} isClosed={true}></Trip>
-                  )
-                }
-                return null
-              })}
-            </div>
+            {reservedUserProps.length == 0 ? null :
+              <>
+                <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Users To Accept</h1>
+                <div className="flex flex-col items-center">
+                  {reservedUserProps.length != 0 && reservedUserProps.map((item) => {
+                    return (
+                      <ReservedUser {...item}></ReservedUser>
+                    )
+                  })}
+                </div>
+              </>
+            }
+            {tripProps.length == 0 ? null :
+              <>
+                <h1 className="text-center mb-5 mt-5 text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Trips</h1>
+                <div className="flex flex-col items-center">
+                  {tripProps.length != 0 && tripProps.map((item, idx) => {
+                    if (!trips[idx]?.finished) {
+                      return (
+                        <Trip key={trips[idx]?.id} {...item} canClose={true}></Trip>
+                      )
+                    }
+                    return null
+                  })}
+                </div>
+              </>}
+            {tripProps.length == 0 ? null :
+              <>
+                <h1 className="mb-5 mt-5 text-center text-6xl font-bold text-text/0 text-transparent bg-gradient-to-r from-primary to-accent bg-clip-text">Your Past Trips</h1>
+                <div className="flex flex-col items-center">
+                  {tripProps.length != 0 && tripProps.map((item, idx) => {
+                    if (trips[idx]?.finished) {
+                      return (
+                        <Trip key={trips[idx]?.id} {...item} canClose={false} isClosed={true}></Trip>
+                      )
+                    }
+                    return null
+                  })}
+                </div>
+              </>
+            }
           </div>
         </main>
       )

@@ -1,18 +1,17 @@
 'use client';
-import { Roboto } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-        main: '#c773fd'
+        main: '#7897ed'
     },
     secondary: {
-        main: '#ac0291'
+        main: '#2b138d'
     },
     text: {
-        primary: '#efd9ff',
+        primary: '#d5e0fa',
     }
   }
 });
