@@ -16,6 +16,7 @@ export default {
       'primary': '#7897ed',
       'secondary': '#2b138d',
       'accent': '#6b28e3',
+      'red': '#ff0000'
       },
   },
   plugins: [],
