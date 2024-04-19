@@ -1,3 +1,4 @@
+import AnonHomePage from "~/components/HomePage/AnonHomePage";
 import DriverHomePage from "~/components/HomePage/DriverHomePage";
 import PassengerHomePage from "~/components/HomePage/PassengerHomePage";
 import { validateRequest } from "~/server/auth";
@@ -10,5 +11,7 @@ export default async function HomePage() {
   if(session.user?.role == "PASSENGER") {
     return <PassengerHomePage></PassengerHomePage>
   }
-  return null
+  else {
+    return <AnonHomePage></AnonHomePage>
+  }
 }
