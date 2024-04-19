@@ -22,7 +22,7 @@ export default async function SignInPage({ searchParams }: { searchParams: { [ke
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" />
 				<button>Continue</button>
 			</form>
-			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signup?${searchParams.callback ? `callback=${searchParams.callback}` : ""}`}>Go to Sign Up</Link></div>
+			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signup?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Sign Up</Link></div>
 		</div>
 	);
 }
