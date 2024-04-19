@@ -5,17 +5,19 @@ import { db } from "~/server/db";
 import { redirect } from "next/navigation";
 import { generateId } from "lucia";
 import Link from "next/link";
-import { Prisma } from "@prisma/client";
+import Error from "~/components/Error/Error";
 import { captureException, getCurrentScope } from "@sentry/nextjs";
 
 export default async function DriverSignUpPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
-	const signUpWithCallback = signup.bind(null, searchParams.callback ?? "/")
+	const signUpWithCallback = signup.bind(null, searchParams.callback as string | null ?? "/")
+	const error = searchParams.error as string | null
 
 	return (
 		<div className="flex w-full h-screen items-center justify-center flex-col">
 			<h1 className="text-4xl mb-4">Create a Driver account</h1>
 			<form className="flex flex-col p-6 bg-primary/50 border-2 rounded-lg mb-4" action={signUpWithCallback}>
+				{error && <Error message={error}></Error>}
 				<label className="mb-1" htmlFor="username">Username (between 4 and 31 characters):</label>
 				<input className="bg-secondary mb-2 rounded-md" name="username" id="username" required />
 				<label className="mb-1" htmlFor="name">Name:</label>
@@ -36,15 +38,16 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" required />
 				<button>Continue</button>
 			</form>
-			<div className="mb-6"><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signup">Go to Passenger Sign Up</Link></div>
-			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signin">Go to Sign In</Link></div>
+			<div className="mb-6"><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signup?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Passenger Sign Up</Link></div>
+			<div><Link className="text-blue-500 bg-accent p-3 rounded-md"href={`/signin?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Sign In</Link></div>
 		</div>
 	);
 }
 
-async function signup(callback: string | string[], formData: FormData): Promise<ActionResult> {
+async function signup(callback: string, formData: FormData): Promise<ActionResult> {
 	"use server";
 	//const username = formData.get("username");
+	const decodedCallback = decodeURIComponent(callback)
 	const user = {
 		username: formData.get("username")!,
 		name: formData.get("name"),
@@ -69,6 +72,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		};
 	}
 	if (user.username.toLowerCase() == "driver" || user.username.toLowerCase() == "passenger") {
+		redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Username cannot be driver or passenger")}`)
 		return {
 			error: "Invalid username"
 		};
@@ -99,18 +103,20 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		};
 	}
 	if (typeof user.expiration !== "string") {
-		const date = Date.parse(user.expiration)
-		if (date < Date.now()) {
-			return {
-				error: "Invalid expiration"
-			};
-		}
 		return {
 			error: "Invalid expiration"
 		};
 	}
+	const date = Date.parse(user.expiration)
+		if (date < Date.now()) {
+			redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Invalid expiration")}`)
+			return {
+				error: "Invalid expiration"
+			};
+		}
 	//const password = formData.get("password");
 	if (typeof user.password !== "string" || user.password.length < 4 || user.password.length > 255) {
+		redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Password is too short or too long")}`)
 		return {
 			error: "Invalid password"
 		};
@@ -138,7 +144,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 						license: {
 							create: {
 								number: user.license,
-								expiration: new Date(user.expiration)						
+								expiration: new Date(user.expiration)
 							}
 						}
 					}
@@ -148,8 +154,9 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 	} catch (e) {
 		getCurrentScope().setLevel("warning")
 		captureException(e)
+		redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("User already exists with one of the unique fields eg. Password, email, license etc.")}`)
 		// The .code property can be accessed in a type-safe manner
-		return redirect("/error?error=unique")
+		//return redirect("/error?error=unique")
 	}
 
 
