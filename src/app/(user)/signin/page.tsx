@@ -5,34 +5,39 @@ import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import Link from "next/link";
 import { captureMessage } from "@sentry/nextjs";
+import Error from "~/components/Error/Error";
 
 export default async function SignInPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
-    const loginInWithCallback = login.bind(null, searchParams.callback ?? "/")
+	const loginInWithCallback = login.bind(null, searchParams.callback as string | null ?? "/")
+	const error = searchParams.error as string | null
 	return (
-		<div className="flex w-full items-center justify-center flex-col">
+		<div className="flex w-full h-screen items-center justify-center flex-col">
 			<h1 className="text-4xl mb-4">Sign in</h1>
 			<form className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-primary/50" action={loginInWithCallback}>
+				{error && <Error message={error}></Error>}
 				<label className="mb-1" htmlFor="username">Username:</label>
 				<input className="bg-secondary mb-2 rounded-md" name="username" id="username" />
 				<label className="mb-1" htmlFor="password">Password:</label>
 				<input className="bg-secondary mb-2 rounded-md" type="password" name="password" id="password" />
 				<button>Continue</button>
 			</form>
-			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href="/signup">Go to Sign Up</Link></div>
+			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signup?${searchParams.callback ? `callback=${searchParams.callback}` : ""}`}>Go to Sign Up</Link></div>
 		</div>
 	);
 }
 
-async function login(callback: string | string[], formData: FormData): Promise<ActionResult> {
+async function login(callback: string, formData: FormData): Promise<ActionResult> {
 	"use server";
 	const username = formData.get("username");
+	const decodedCallback = decodeURIComponent(callback)
 	if (
 		typeof username !== "string" ||
 		username.length < 3 ||
 		username.length > 31 ||
 		!/^[a-z0-9_-]+$/.test(username)
 	) {
+		// replace with redirect to current page with 
 		return {
 			error: "Invalid username"
 		};
@@ -66,22 +71,21 @@ async function login(callback: string | string[], formData: FormData): Promise<A
 		// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
 		// If usernames are public, you may outright tell the user that the username is invalid.
 		captureMessage("Invalid username", "log")
-		return redirect("/error?error=invusername");
+		redirect(`/signin?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Invalid Username")}`)
+		//return redirect("/error?error=invusername");
 	}
 
 	const validPassword = await new Argon2id().verify(existingUser.password, password);
 	if (!validPassword) {
 		captureMessage("Invalid password", "log")
-		return redirect("/error?error=invpassword");
+		redirect(`/signin?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Invalid Password")}`)
+		//return redirect("/error?error=invpassword");
 	}
 
 	const session = await lucia.createSession(existingUser.id, {});
 	const sessionCookie = lucia.createSessionCookie(session.id);
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-	if (typeof callback === "string") {
-		return redirect(decodeURIComponent(callback));
-	}
-	return redirect("/");
+	return redirect(decodedCallback);
 }
 
 interface ActionResult {
