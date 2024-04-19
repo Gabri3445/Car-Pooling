@@ -53,7 +53,7 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		tel: formData.get("tel"),
 		pfp: formData.get("pfp") as File,
 		license: formData.get("license"),
-		expiration: formData.get("expiration"),
+		expiration: formData.get("expiration") as string,
 		password: formData.get("password")
 	}
 	// username must be between 4 ~ 31 characters, and only consists of letters, 0-9, -, and _
@@ -99,6 +99,12 @@ async function signup(callback: string | string[], formData: FormData): Promise<
 		};
 	}
 	if (typeof user.expiration !== "string") {
+		const date = Date.parse(user.expiration)
+		if (date < Date.now()) {
+			return {
+				error: "Invalid expiration"
+			};
+		}
 		return {
 			error: "Invalid expiration"
 		};
