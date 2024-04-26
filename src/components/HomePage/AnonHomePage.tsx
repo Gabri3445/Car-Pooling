@@ -21,6 +21,7 @@ export default async function AnonHomePage() {
                     Users: true
                 }
             },
+            date: true,
             finished: true,
             Ratings: true,
             cost: true,
@@ -54,6 +55,7 @@ export default async function AnonHomePage() {
             canReserve: false,
             isDriver: false,
             id: t.id,
+            date: t.date,
             rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
         }
     })

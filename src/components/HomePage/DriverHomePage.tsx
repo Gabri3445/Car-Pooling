@@ -63,6 +63,7 @@ export default async function DriverHomePage() {
             Users: true
           }
         },
+        date: true,
         finished: true,
         note: true,
         vehicle: {
@@ -109,6 +110,7 @@ export default async function DriverHomePage() {
           canReserve: false,
           isDriver: true,
           id: t.id,
+          date: t.date,
           rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
         }
       })

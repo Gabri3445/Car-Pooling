@@ -58,6 +58,7 @@ export default async function PassengerHomePage() {
             Users: true
           }
         },
+        date: true,
         finished: true,
         Ratings: true,
         cost: true,
@@ -88,6 +89,7 @@ export default async function PassengerHomePage() {
             model: true
           }
         },
+        date: true,
         depCity: true,
         arrCity: true,
         depTime: true,
@@ -136,6 +138,7 @@ export default async function PassengerHomePage() {
           canReserve: false,
           isDriver: false,
           id: t.id,
+          date: t.date,
           rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
         }
       })
@@ -155,6 +158,7 @@ export default async function PassengerHomePage() {
           canReserve: false,
           isDriver: false,
           id: t.id,
+          date: t.date,
           rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0 //average of all ratings, if no ratings return 0
         }
       })

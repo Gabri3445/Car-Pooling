@@ -23,6 +23,7 @@ export interface TripProps {
     isDriver: boolean,
     rating: number,
     id: string,
+    date: Date,
     userId?: string,
     canClose?: boolean
     canRate?: boolean
@@ -55,6 +56,7 @@ export default async function Trip(props: TripProps) {
                         <span>Arrival City: {props.arrCity}</span>
                     </div>
                     <div className="flex flex-col">
+                        <span>Departure Date: {props.date.getDate() + "-" + props.date.getMonth()}</span>
                         <span>Departure Time: {props.depTime}</span>
                         <span>Estimated Arrival Time: {props.estArrTime}</span>
                     </div>

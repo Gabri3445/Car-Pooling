@@ -46,6 +46,7 @@ export default async function SearchPage({
           model: true
         }
       },
+      date: true,
       Ratings: {
         select: {
           star: true
@@ -80,7 +81,8 @@ export default async function SearchPage({
       isDriver: session.user?.role == "DRIVER",
       id: t.id,
       rating: t.Ratings.reduce((acc, curr) => acc + curr.star, 0) / t.Ratings.length ?? 0, //average of all ratings, if no ratings return 0
-      canClose: false
+      canClose: false,
+      date: t.date
     }
   }))
   return (

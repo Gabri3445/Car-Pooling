@@ -3,10 +3,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"
 import { validateRequest } from "~/server/auth"
 import { db } from "~/server/db";
+import Error from "~/components/Error/Error";
 
-export default async function CreatePage() {
+export default async function CreatePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
     const session = await validateRequest();
+    const error = searchParams.error as string | null
 
     if (session.user == null) {
         captureMessage("User was not signed in when accessing trip creation page", "log")
@@ -39,8 +41,11 @@ export default async function CreatePage() {
         <div className="flex w-full items-center justify-center h-screen overflow-hidden flex-col">
             <h1 className="text-4xl mb-4">Create a trip</h1>
             <form action={createTrip.bind(null, driver!.driverInfo!.id)} className="flex flex-col p-6 border-2 rounded-lg mb-4 bg-primary/50">
+                {error && <Error message={error}></Error>}
                 <label className="mb-1" htmlFor="depCity">Departing City:</label>
                 <input className="bg-secondary mb-2 rounded-md" name="depCity" id="depCity" required />
+                <label className="mb-1" htmlFor="date">Departing Date:</label>
+                <input className="bg-secondary mb-2 rounded-md" name="date" id="date" type="date" required />
                 <label className="mb-1" htmlFor="arrCity">Arriving City:</label>
                 <input className="bg-secondary mb-2 rounded-md" name="arrCity" id="arrCity" required />
                 <label className="mb-1" htmlFor="depDate">Departing Time:</label>
@@ -51,7 +56,7 @@ export default async function CreatePage() {
                 <input className="bg-secondary mb-2 rounded-md" name="cost" id="cost" required />
                 <label className="mb-1" htmlFor="vehicle">Vehicle:</label>
                 <select required defaultValue={"default"} id="vehicle" name="vehicle" className="bg-secondary border border-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="default">Choose one of your vehicles</option>
+                    <option value="">Choose one of your vehicles</option>
                     {driver!.driverInfo!.vehicles.map((item) => {
                         return (
                             <option key={item.licensePlate} value={item.licensePlate} >{item.model}</option>
@@ -77,8 +82,15 @@ const createTrip = async (id: string, formData: FormData) => {
         arrTime: formData.get("arrDate") as string,
         cost: Number(formData.get("cost")),
         vehicleLicense: formData.get("vehicle") as string,
+        date: formData.get("date") as string,
         note: formData.get("note") as string,
     }
+
+    const date = Date.parse(trip.date)
+    if (date < Date.now()) {
+        redirect(`/create?error=${encodeURIComponent("Date cannot be in the past")}`)
+    }
+
     await db.trip.create({
         data: {
             depCity: trip.depCity,
@@ -87,7 +99,8 @@ const createTrip = async (id: string, formData: FormData) => {
             estArrTime: trip.arrTime,
             cost: trip.cost,
             vehicleLicensePlate: trip.vehicleLicense,
-            driverInfoId: id
+            driverInfoId: id,
+            date: new Date(trip.date)
         }
     })
     revalidatePath("/")

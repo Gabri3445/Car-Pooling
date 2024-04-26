@@ -69,6 +69,7 @@ model Trip {
   cost                Decimal
   finished            Boolean    @default(false)
   note                String?    @db.Text
+  date                DateTime
   Users               User[]     @relation(name: "trips")
   UsersToAccept       User[]     @relation(name: "usersToAccept")
   vehicle             Vehicle    @relation(fields: [vehicleLicensePlate], references: [licensePlate], onDelete: Cascade)
