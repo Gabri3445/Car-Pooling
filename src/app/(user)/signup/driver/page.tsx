@@ -39,7 +39,7 @@ export default async function DriverSignUpPage({ searchParams }: { searchParams:
 				<button>Continue</button>
 			</form>
 			<div className="mb-6"><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signup?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Passenger Sign Up</Link></div>
-			<div><Link className="text-blue-500 bg-accent p-3 rounded-md"href={`/signin?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Sign In</Link></div>
+			<div><Link className="text-blue-500 bg-accent p-3 rounded-md" href={`/signin?${searchParams.callback ? `callback=${encodeURIComponent(searchParams.callback as string)}` : ""}`}>Go to Sign In</Link></div>
 		</div>
 	);
 }
@@ -108,12 +108,12 @@ async function signup(callback: string, formData: FormData): Promise<ActionResul
 		};
 	}
 	const date = Date.parse(user.expiration)
-		if (date < Date.now()) {
-			redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Invalid expiration")}`)
-			return {
-				error: "Invalid expiration"
-			};
-		}
+	if (date < Date.now()) {
+		redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Invalid expiration")}`)
+		return {
+			error: "Invalid expiration"
+		};
+	}
 	//const password = formData.get("password");
 	if (typeof user.password !== "string" || user.password.length < 4 || user.password.length > 255) {
 		redirect(`/signup/driver?callback=${encodeURIComponent(callback)}&error=${encodeURIComponent("Password is too short or too long")}`)
