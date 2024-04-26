@@ -19,7 +19,7 @@ export default function DriverProfile(props: DriverProfileProps) {
     return (
         <div className="rounded-md p-4 bg-secondary shadow-sm shadow-text border flex-col flex items-center text-center w-fit">
             <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
-                <Image width={256} height={256} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
+                <Image width={256} height={256} alt="Profile Picture" className="aspect-square" src={`data:image/png;base64,${props.pfp}`}></Image>
             </div>
             <span className="text-3xl">{props.name} {props.surname}</span>
             <span className="text-lg text-text/80 mb-2"> {props.username} </span>
