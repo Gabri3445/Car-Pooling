@@ -15,7 +15,7 @@ export default async function SearchPage({
   }
   const session = await validateRequest();
   if (!session.user) {
-    redirect(`/signin?callback=${encodeURIComponent("/search")}`)
+    redirect(`/signin?callback=${encodeURIComponent(`/search?from=${encodeURIComponent(from as string)}&to=${encodeURIComponent(to as string)}`)}`)
   }
   const trips = await db.trip.findMany({
     where: {
