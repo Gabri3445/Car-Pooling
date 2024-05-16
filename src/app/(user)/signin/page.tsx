@@ -34,8 +34,7 @@ async function login(callback: string, formData: FormData): Promise<ActionResult
 	if (
 		typeof username !== "string" ||
 		username.length < 3 ||
-		username.length > 31 ||
-		!/^[a-z0-9_-]+$/.test(username)
+		username.length > 31
 	) {
 		// replace with redirect to current page with 
 		return {

@@ -43,7 +43,7 @@ export default async function Trip(props: TripProps) {
                         <div className="rounded-full border-4 z-10 w-fit bg-white overflow-hidden bg-text/50">
                             <Image width={64} height={64} alt="Profile Picture" src={`data:image/png;base64,${props.pfp}`}></Image>
                         </div>
-                        {props.isDriver && <RatingWrapper readOnly={false} ratingFromId={user!.id} ratingToId={props.driverId!} ratingToTripId={props.id} ratingToUsername={props.username}></RatingWrapper>} {/*<Rating className="mt-2" readOnly={!props.canRate ?? true}></Rating>*/}
+                        {props.canRate && <RatingWrapper readOnly={false} ratingFromId={user!.id} ratingToId={props.driverId!} ratingToTripId={props.id} ratingToUsername={props.username}></RatingWrapper>} {/*<Rating className="mt-2" readOnly={!props.canRate ?? true}></Rating>*/}
                     </div>
                     <div className="flex flex-col p-2">
                         <Link href={`/user/${props.username}`}>{props.username}</Link>
